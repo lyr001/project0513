@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import {VariableArr, Volume} from './basic_class';
+import {CTscanner} from './geometry';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'project0513';
+  a = new Volume();
+  b = new CTscanner();
+  result: any;
 }
