@@ -463,8 +463,8 @@ export class GenericRepeater {
 ////////////////////////////////////////////////////////////////////////////////////
 export class RepeatObject {
   type: string;
-  content: Volume | VoxelizedPhantom | MoveTranslation
-    | MoveRotation | MoveOrbiting | MoveOscTrans | MoveEccentRot;
+  content: Volume | VoxelizedPhantom | LinearRepeater
+    | RingRepeater | CubicArrayRepeater | QuadrantRepeater | SphereRepeater | GenericRepeater;
 
   constructor() {
     this.type = 'undefined';
@@ -474,15 +474,16 @@ export class RepeatObject {
   input_type(key: string) {
     switch (key) {
       case 'type': return {type: this.type, subclass: ['Volume', 'VoxelizedPhantom',
-          'MoveTranslation', 'MoveRotation', 'MoveOrbiting', 'MoveOscTrans', 'MoveEccentRot']}; break;
+          'LinearRepeater', 'RingRepeater', 'CubicArrayRepeater', 'QuadrantRepeater', 'SphereRepeater', 'GenericRepeater']}; break;
       case 'content': switch (this.type) {
         case 'Volume': return 'Volume'; break;
         case 'VoxelizedPhantom': return 'VoxelizedPhantom'; break;
-        case 'MoveTranslation': return 'MoveTranslation'; break;
-        case 'MoveRotation': return 'MoveRotation'; break;
-        case 'MoveOrbiting': return 'MoveOrbiting'; break;
-        case 'MoveOscTrans': return 'MoveOscTrans'; break;
-        case 'MoveEccentRot': return 'MoveEccentRot'; break;
+        case 'LinearRepeater': return 'LinearRepeater'; break;
+        case 'RingRepeater': return 'RingRepeater'; break;
+        case 'CubicArrayRepeater': return 'CubicArrayRepeater'; break;
+        case 'QuadrantRepeater': return 'QuadrantRepeater'; break;
+        case 'SphereRepeater': return 'SphereRepeater'; break;
+        case 'GenericRepeater': return 'GenericRepeater'; break;
         default: return 'undefined';
       } break;
     }
@@ -492,11 +493,12 @@ export class RepeatObject {
     switch (this.type) {
       case'Volume': this.type = 'Volume'; this.content = new Volume(); break;
       case'VoxelizedPhantom': this.type = 'VoxelizedPhantom'; this.content = new VoxelizedPhantom(); break;
-      case'MoveTranslation': this.type = 'MoveTranslation'; this.content = new MoveTranslation(); break;
-      case'MoveRotation': this.type = 'MoveRotation'; this.content = new MoveRotation(); break;
-      case'MoveOrbiting': this.type = 'MoveOrbiting'; this.content = new MoveOrbiting(); break;
-      case'MoveOscTrans': this.type = 'MoveOscTrans'; this.content = new MoveOscTrans(); break;
-      case'MoveEccentRot': this.type = 'MoveEccentRot'; this.content = new MoveEccentRot(); break;
+      case'LinearRepeater': this.type = 'LinearRepeater'; this.content = new LinearRepeater(); break;
+      case'RingRepeater': this.type = 'RingRepeater'; this.content = new RingRepeater(); break;
+      case'CubicArrayRepeater': this.type = 'CubicArrayRepeater'; this.content = new CubicArrayRepeater(); break;
+      case'QuadrantRepeater': this.type = 'QuadrantRepeater'; this.content = new QuadrantRepeater(); break;
+      case'SphereRepeater': this.type = 'SphereRepeater'; this.content = new SphereRepeater(); break;
+      case'GenericRepeater': this.type = 'GenericRepeater'; this.content = new GenericRepeater(); break;
       default: this.type = 'undefined'; this.content = undefined;
     }
   }

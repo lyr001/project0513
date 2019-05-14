@@ -8,14 +8,18 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class InputFormComponent implements OnInit {
 
   @Input() type: string;
-  @Input() default: any;
+  @Input()
+  get default(): any { return this.result; }
+  set default(r: any) {
+    this.result = r;
+  }
   @Output() getInput = new EventEmitter();
   result: any;
 
   constructor() { }
 
   ngOnInit() {
-    this.result =  this.default;
+    // this.result =  this.default;
   }
 
   get_input(value: any) {
