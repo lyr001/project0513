@@ -6,17 +6,31 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
   styleUrls: ['./form.component.css'],
 })
 export class FormComponent implements OnInit {
+<<<<<<< HEAD
   // @Input() default: object | undefined;
+=======
+
+  @Input() // default: object | undefined;
+  get default(): object | undefined { return this.result; }
+  set default(r: object | undefined) {
+    this.result = r;
+  }
+>>>>>>> master
   @Output() getInput = new EventEmitter();
   result: object | undefined;
 
   // result: any;
 
+<<<<<<< HEAD
   @Input() get default(): object | undefined {
     return this.result;
   }
   set default(r: object | undefined) {
     this.result = r;
+=======
+  ngOnInit() {
+    // this.result = this.default;
+>>>>>>> master
   }
 
   constructor() {}
