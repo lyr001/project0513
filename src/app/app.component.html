@@ -1,2 +1,13 @@
-<app-form [default]="b" (getInput)="result=$event;"></app-form>
-<div>{{result | json}}</div>
+<!-- <li>aaa
+     <label>bbb
+        <input type="text"/>
+        <input type="text"/>
+     </label>
+
+  <input type="text" />
+  <input type="text" />
+</li> -->
+
+<app-form [default]="b"></app-form>
+<!-- (getInput)="result=$event;" -->
+<div>{{ result | json }}</div>
