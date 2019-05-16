@@ -17,9 +17,12 @@ export class Placement {
   placement_translation: VariableArr;
   placement_rotation: VariableArr;
 
-  constructor() {
-    this.placement_translation = new VariableArr('PlacementTranslation');
-    this.placement_rotation = new VariableArr('PlacementRotation');
+  constructor(options: {
+    placement_translation?: VariableArr,
+    placement_rotation?: VariableArr
+  } = {}) {
+    this.placement_translation = options.placement_translation || new VariableArr('PlacementTranslation');
+    this.placement_rotation = options.placement_rotation || new VariableArr('PlacementRotation');
   }
 
   input_type(key) {
@@ -34,9 +37,12 @@ export class PlacementTranslation {
   value: Vec3;
   target: VariableArr;
 
-  constructor() {
-    this.value = new Vec3();
-    this.target = new VariableArr('PlacementObject');
+  constructor(options: {
+    value?: Vec3,
+    target?: VariableArr
+  } = {}) {
+    this.value = options.value || new Vec3();
+    this.target = options.target || new VariableArr('PlacementObject');
   }
 
   input_type(key) {
@@ -52,10 +58,14 @@ export class PlacementRotation {
   angle: Value;
   target: VariableArr;
 
-  constructor() {
-    this.axis = [null, null, null];
-    this.angle = new Value();
-    this.target = new VariableArr('PlacementObject');
+  constructor(options: {
+    axis?: [number, number, number],
+    angle?: Value,
+    target?: VariableArr
+  } = {}) {
+    this.axis = options.axis || [null, null, null];
+    this.angle = options.angle || new Value();
+    this.target = options.target || new VariableArr('PlacementObject');
   }
 
   input_type(key) {
@@ -68,20 +78,21 @@ export class PlacementRotation {
 //////////////////////////////////////////////////////////////////////////////////
 export class PlacementObject {
   type: string;
-  content: Volume | VoxelizedPhantom | PlacementTranslation | PlacementRotation;
+  content: string | PlacementTranslation | PlacementRotation;
 
-  constructor() {
-    this.type = 'undefined';
-    this.content = undefined;
+  constructor(options: {
+    type?: string,
+    content?: string | PlacementTranslation | PlacementRotation
+  } = {}) {
+    this.type = options.type || 'undefined';
+    this.content = options.content || undefined;
   }
 
   input_type(key: string) {
     switch (key) {
-      case 'type': return {type: this.type, subclass: ['Volume',
-          'VoxelizedPhantom', 'PlacementTranslation', 'PlacementRotation']}; break;
+      case 'type': return {type: this.type, subclass: ['string', 'PlacementTranslation', 'PlacementRotation']}; break;
       case 'content': switch (this.type) {
-        case 'Volume': return 'Volume'; break;
-        case 'VoxelizedPhantom': return 'VoxelizedPhantom'; break;
+        case 'string': return 'string'; break;
         case 'PlacementTranslation': return 'PlacementTranslation'; break;
         case 'PlacementRotation': return 'PlacementRotation'; break;
         default: return 'undefined';
@@ -91,8 +102,7 @@ export class PlacementObject {
 
   choose_subclass() {
     switch (this.type) {
-      case'Volume': this.type = 'Volume'; this.content = new Volume(); break;
-      case'VoxelizedPhantom': this.type = 'VoxelizedPhantom'; this.content = new VoxelizedPhantom(); break;
+      case'string': this.type = 'string'; this.content = ''; break;
       case'PlacementTranslation': this.type = 'PlacementTranslation'; this.content = new PlacementTranslation(); break;
       case'PlacementRotation': this.type = 'PlacementRotation'; this.content = new PlacementRotation(); break;
       default: this.type = 'undefined'; this.content = undefined;
@@ -107,12 +117,18 @@ export class Move {
   move_osc_trans: VariableArr;
   move_eccent_rot: VariableArr;
 
-  constructor() {
-    this.move_translation = new VariableArr('MoveTranslation');
-    this.move_rotation = new VariableArr('MoveRotation');
-    this.move_orbiting = new VariableArr('MoveOrbiting');
-    this.move_osc_trans = new VariableArr('MoveOscTrans');
-    this.move_eccent_rot = new VariableArr('MoveEccentRot');
+  constructor(options: {
+    move_translation?: VariableArr,
+    move_rotation?: VariableArr,
+    move_orbiting?: VariableArr,
+    move_osc_trans?: VariableArr,
+    move_eccent_rot?: VariableArr
+  } = {}) {
+    this.move_translation = options.move_translation || new VariableArr('MoveTranslation');
+    this.move_rotation = options.move_rotation || new VariableArr('MoveRotation');
+    this.move_orbiting = options.move_orbiting || new VariableArr('MoveOrbiting');
+    this.move_osc_trans = options.move_osc_trans || new VariableArr('MoveOscTrans');
+    this.move_eccent_rot = options.move_eccent_rot || new VariableArr('MoveEccentRot');
   }
 
   input_type(key) {
@@ -130,9 +146,12 @@ export class MoveTranslation {
   speed: Vec3;
   target: VariableArr;
 
-  constructor() {
-    this.speed = new Vec3();
-    this.target = new VariableArr('MoveObject');
+  constructor(options: {
+    speed?: Vec3,
+    target?: VariableArr
+  } = {}) {
+    this.speed = options.speed || new Vec3();
+    this.target = options.target || new VariableArr('MoveObject');
   }
 
   input_type(key) {
@@ -148,10 +167,14 @@ export class MoveRotation {
   axis: [boolean, boolean, boolean];
   target: VariableArr;
 
-  constructor() {
-    this.speed = new Value();
-    this.axis = [false, false, false];
-    this.target = new VariableArr('MoveObject');
+  constructor(options: {
+    speed?: Value,
+    axis?: [boolean, boolean, boolean],
+    target?: VariableArr
+  } = {}) {
+    this.speed = options.speed || new Value();
+    this.axis = options.axis || [false, false, false];
+    this.target = options.target || new VariableArr('MoveObject');
   }
 
   input_type(key) {
@@ -170,12 +193,18 @@ export class MoveOrbiting {
   auto_rotation: boolean;
   target: VariableArr;
 
-  constructor() {
-    this.speed = new Value();
-    this.point1 = new Vec3();
-    this.point2 = new Vec3();
-    this.auto_rotation = false;
-    this.target = new VariableArr('MoveObject');
+  constructor(options: {
+    speed?: Value,
+    point1?: Vec3,
+    point2?: Vec3,
+    auto_rotation?: boolean,
+    target?: VariableArr
+  } = {}) {
+    this.speed = options.speed || new Value();
+    this.point1 = options.point1 || new Vec3();
+    this.point2 = options.point2 || new Vec3();
+    this.auto_rotation = options.auto_rotation || false;
+    this.target = options.target || new VariableArr('MoveObject');
   }
 
   input_type(key) {
@@ -196,12 +225,18 @@ export class MoveOscTrans {
   phase: Value;
   target: VariableArr;
 
-  constructor() {
-    this.amplitude = new Vec3();
-    this.frequency = new Value();
-    this.period = new Value();
-    this.phase = new Value();
-    this.target = new VariableArr('MoveObject');
+  constructor(options: {
+    amplitude?: Vec3,
+    frequency?: Value,
+    period?: Value,
+    phase?: Value,
+    target?: VariableArr
+  } = {}) {
+    this.amplitude = options.amplitude || new Vec3();
+    this.frequency = options.frequency || new Value();
+    this.period = options.period || new Value();
+    this.phase = options.phase || new Value();
+    this.target = options.target || new VariableArr('MoveObject');
   }
 
   input_type(key) {
@@ -220,10 +255,14 @@ export class MoveEccentRot {
   speed: Value;
   target: VariableArr;
 
-  constructor() {
-    this.shifts = new Vec3();
-    this.speed = new Value();
-    this.target = new VariableArr('MoveObject');
+  constructor(options: {
+    shifts?: Vec3,
+    speed?: Value,
+    target?: VariableArr
+  } = {}) {
+    this.shifts = options.shifts || new Vec3();
+    this.speed = options.speed || new Value();
+    this.target = options.target || new VariableArr('MoveObject');
   }
 
   input_type(key) {
@@ -237,21 +276,24 @@ export class MoveEccentRot {
 ////////////////////////////////////////////////////////////////////////////////////
 export class MoveObject {
   type: string;
-  content: Volume | VoxelizedPhantom | MoveTranslation
+  content: string | MoveTranslation
     | MoveRotation | MoveOrbiting | MoveOscTrans | MoveEccentRot;
 
-  constructor() {
-    this.type = 'undefined';
-    this.content = undefined;
+  constructor(options: {
+    type?: string,
+    content?: string | MoveTranslation
+      | MoveRotation | MoveOrbiting | MoveOscTrans | MoveEccentRot
+  } = {}) {
+    this.type = options.type || 'undefined';
+    this.content = options.content || undefined;
   }
 
   input_type(key: string) {
     switch (key) {
-      case 'type': return {type: this.type, subclass: ['Volume', 'VoxelizedPhantom',
+      case 'type': return {type: this.type, subclass: ['string',
           'MoveTranslation', 'MoveRotation', 'MoveOrbiting', 'MoveOscTrans', 'MoveEccentRot']}; break;
       case 'content': switch (this.type) {
-        case 'Volume': return 'Volume'; break;
-        case 'VoxelizedPhantom': return 'VoxelizedPhantom'; break;
+        case 'string': return 'string'; break;
         case 'MoveTranslation': return 'MoveTranslation'; break;
         case 'MoveRotation': return 'MoveRotation'; break;
         case 'MoveOrbiting': return 'MoveOrbiting'; break;
@@ -264,8 +306,7 @@ export class MoveObject {
 
   choose_subclass() {
     switch (this.type) {
-      case'Volume': this.type = 'Volume'; this.content = new Volume(); break;
-      case'VoxelizedPhantom': this.type = 'VoxelizedPhantom'; this.content = new VoxelizedPhantom(); break;
+      case'string': this.type = 'string'; this.content = ''; break;
       case'MoveTranslation': this.type = 'MoveTranslation'; this.content = new MoveTranslation(); break;
       case'MoveRotation': this.type = 'MoveRotation'; this.content = new MoveRotation(); break;
       case'MoveOrbiting': this.type = 'MoveOrbiting'; this.content = new MoveOrbiting(); break;
@@ -284,13 +325,20 @@ export class Repeater {
   sphere_repeater: VariableArr;
   generic_repeater: VariableArr;
 
-  constructor() {
-    this.linear_repeater = new VariableArr('LinearRepeater');
-    this.ring_repeater = new VariableArr('RingRepeater');
-    this.cubic_array_repeater = new VariableArr('CubicArrayRepeater');
-    this.quadrant_repeater = new VariableArr('QuadrantRepeater');
-    this.sphere_repeater = new VariableArr('SphereRepeater');
-    this.generic_repeater = new VariableArr('GenericRepeater');
+  constructor(options: {
+    linear_repeater?: VariableArr,
+    ring_repeater?: VariableArr,
+    cubic_array_repeater?: VariableArr,
+    quadrant_repeater?: VariableArr,
+    sphere_repeater?: VariableArr,
+    generic_repeater?: VariableArr
+  } = {}) {
+    this.linear_repeater = options.linear_repeater || new VariableArr('LinearRepeater');
+    this.ring_repeater = options.ring_repeater || new VariableArr('RingRepeater');
+    this.cubic_array_repeater = options.cubic_array_repeater || new VariableArr('CubicArrayRepeater');
+    this.quadrant_repeater = options.quadrant_repeater || new VariableArr('QuadrantRepeater');
+    this.sphere_repeater = options.sphere_repeater || new VariableArr('SphereRepeater');
+    this.generic_repeater = options.generic_repeater || new VariableArr('GenericRepeater');
   }
 
   input_type(key) {
@@ -311,11 +359,16 @@ export class LinearRepeater {
   auto_center: boolean;
   target: VariableArr;
 
-  constructor() {
-    this.repeat_number = null;
-    this.repeat_vector = new Vec3();
-    this.auto_center = false;
-    this.target = new VariableArr('RepeatObject');
+  constructor(options: {
+    repeat_number?: number,
+    repeat_vector?: Vec3,
+    auto_center?: boolean,
+    target?: VariableArr
+  } = {}) {
+    this.repeat_number = options.repeat_number || null;
+    this.repeat_vector = options.repeat_vector || new Vec3();
+    this.auto_center = options.auto_center || false;
+    this.target = options.target || new VariableArr('RepeatObject');
   }
 
   input_type(key) {
@@ -339,16 +392,27 @@ export class RingRepeater {
   auto_rotation: boolean;
   target: VariableArr;
 
-  constructor() {
-    this.repeat_number = null;
-    this.point1 = new Vec3();
-    this.point2 = new Vec3();
-    this.first_angle = new Value();
-    this.angular_span = new Value();
-    this.modulo_number = null;
-    this.z_shift = [new Value(), new Value(), new Value(), new Value(), new Value(), new Value(), new Value(), new Value()];
-    this.auto_rotation = false;
-    this.target = new VariableArr('RepeatObject');
+  constructor(options: {
+    repeat_number?: number,
+    point1?: Vec3,
+    point2?: Vec3,
+    first_angle?: Value,
+    angular_span?: Value,
+    modulo_number?: number,
+    z_shift?: [Value, Value, Value, Value, Value, Value, Value, Value],
+    auto_rotation?: boolean,
+    target?: VariableArr
+  } = {}) {
+    this.repeat_number = options.repeat_number || null;
+    this.point1 = options.point1 || new Vec3();
+    this.point2 = options.point2 || new Vec3();
+    this.first_angle = options.first_angle || new Value();
+    this.angular_span = options.angular_span || new Value();
+    this.modulo_number = options.modulo_number || null;
+    this.z_shift = options.z_shift ||
+      [new Value(), new Value(), new Value(), new Value(), new Value(), new Value(), new Value(), new Value()];
+    this.auto_rotation = options.auto_rotation || false;
+    this.target = options.target || new VariableArr('RepeatObject');
   }
 
   input_type(key) {
@@ -371,10 +435,14 @@ export class CubicArrayRepeater {
   repeat_vector: Vec3;
   target: VariableArr;
 
-  constructor() {
-    this.repeat_number = [null, null, null];
-    this.repeat_vector = new Vec3();
-    this.target = new VariableArr('RepeatObject');
+  constructor(options: {
+    repeat_number?: [number, number, number],
+    repeat_vector?: Vec3,
+    target?: VariableArr
+  } = {}) {
+    this.repeat_number = options.repeat_number || [null, null, null];
+    this.repeat_vector = options.repeat_vector || new Vec3();
+    this.target = options.target || new VariableArr('RepeatObject');
   }
 
   input_type(key) {
@@ -393,12 +461,18 @@ export class QuadrantRepeater {
   max_range: Value;
   target: VariableArr;
 
-  constructor() {
-    this.line_number = null;
-    this.orientation = new Value();
-    this.copy_spacing = new Value();
-    this.max_range = new Value();
-    this.target = new VariableArr('RepeatObject');
+  constructor(options: {
+    line_number?: number,
+    orientation?: Value,
+    copy_spacing?: Value,
+    max_range?: Value,
+    target?: VariableArr
+  } = {}) {
+    this.line_number = options.line_number || null;
+    this.orientation = options.orientation || new Value();
+    this.copy_spacing = options.copy_spacing || new Value();
+    this.max_range = options.max_range || new Value();
+    this.target = options.target || new VariableArr('RepeatObject');
   }
 
   input_type(key) {
@@ -420,13 +494,20 @@ export class SphereRepeater {
   phi_angle: Value;
   target: VariableArr;
 
-  constructor() {
-    this.radius = new Value();
-    this.repeat_number_with_theta = null;
-    this.repeat_number_with_phi = null;
-    this.theta_angle = new Value();
-    this.phi_angle = new Value();
-    this.target = new VariableArr('RepeatObject');
+  constructor(options: {
+    radius?: Value,
+    repeat_number_with_theta?: number,
+    repeat_number_with_phi?: number,
+    theta_angle?: Value,
+    phi_angle?: Value,
+    target?: VariableArr
+  } = {}) {
+    this.radius = options.radius || new Value();
+    this.repeat_number_with_theta = options.repeat_number_with_theta || null;
+    this.repeat_number_with_phi = options.repeat_number_with_phi || null;
+    this.theta_angle = options.theta_angle || new Value();
+    this.phi_angle = options.phi_angle || new Value();
+    this.target = options.target || new VariableArr('RepeatObject');
   }
 
   input_type(key) {
@@ -446,10 +527,14 @@ export class GenericRepeater {
   relative_translation: boolean;
   target: VariableArr;
 
-  constructor() {
-    this.placements_filename = '';
-    this.relative_translation = false;
-    this.target = new VariableArr('RepeatObject');
+  constructor(options: {
+    placements_filename?: string,
+    relative_translation?: boolean,
+    target?: VariableArr
+  } = {}) {
+    this.placements_filename = options.placements_filename ||  '';
+    this.relative_translation = options.relative_translation || false;
+    this.target = options.target || new VariableArr('RepeatObject');
   }
 
   input_type(key) {
@@ -463,21 +548,24 @@ export class GenericRepeater {
 ////////////////////////////////////////////////////////////////////////////////////
 export class RepeatObject {
   type: string;
-  content: Volume | VoxelizedPhantom | LinearRepeater
+  content: string | LinearRepeater
     | RingRepeater | CubicArrayRepeater | QuadrantRepeater | SphereRepeater | GenericRepeater;
 
-  constructor() {
-    this.type = 'undefined';
-    this.content = undefined;
+  constructor(options: {
+    type?: string,
+    content?: string | LinearRepeater
+      | RingRepeater | CubicArrayRepeater | QuadrantRepeater | SphereRepeater | GenericRepeater
+  } = {}) {
+    this.type = options.type || 'undefined';
+    this.content = options.content || undefined;
   }
 
   input_type(key: string) {
     switch (key) {
-      case 'type': return {type: this.type, subclass: ['Volume', 'VoxelizedPhantom',
+      case 'type': return {type: this.type, subclass: ['string',
           'LinearRepeater', 'RingRepeater', 'CubicArrayRepeater', 'QuadrantRepeater', 'SphereRepeater', 'GenericRepeater']}; break;
       case 'content': switch (this.type) {
-        case 'Volume': return 'Volume'; break;
-        case 'VoxelizedPhantom': return 'VoxelizedPhantom'; break;
+        case 'string': return 'string'; break;
         case 'LinearRepeater': return 'LinearRepeater'; break;
         case 'RingRepeater': return 'RingRepeater'; break;
         case 'CubicArrayRepeater': return 'CubicArrayRepeater'; break;
@@ -491,8 +579,7 @@ export class RepeatObject {
 
   choose_subclass() {
     switch (this.type) {
-      case'Volume': this.type = 'Volume'; this.content = new Volume(); break;
-      case'VoxelizedPhantom': this.type = 'VoxelizedPhantom'; this.content = new VoxelizedPhantom(); break;
+      case'string': this.type = 'string'; this.content = ''; break;
       case'LinearRepeater': this.type = 'LinearRepeater'; this.content = new LinearRepeater(); break;
       case'RingRepeater': this.type = 'RingRepeater'; this.content = new RingRepeater(); break;
       case'CubicArrayRepeater': this.type = 'CubicArrayRepeater'; this.content = new CubicArrayRepeater(); break;

@@ -10,6 +10,15 @@ import {
   PlacementRotation,
   PlacementTranslation, QuadrantRepeater, RepeatObject, RingRepeater, SphereRepeater
 } from './act';
+import {
+  IntrinsicResolutionBlurring,
+  LightYield,
+  LocalBlurring,
+  Process,
+  QuantumEfficiency,
+  SetDatasetObject,
+  TransferEfficiency
+} from './physics';
 
 export class Volume {
   name: string;
@@ -18,12 +27,18 @@ export class Volume {
   attach: string;
   appearance: Appearance;
 
-  constructor() {
-    this.name = '';
-    this.shape = new ShapeSub();
-    this.material = '';
-    this.attach = '';
-    this.appearance = new Appearance();
+  constructor(options: {
+    name?: string,
+    shape?: ShapeSub,
+    material?: string,
+    attach?: string,
+    appearance?: Appearance
+  } = {}) {
+    this.name = options.name || '';
+    this.shape = options.shape || new ShapeSub();
+    this.material = options.material || '';
+    this.attach = options.attach || '';
+    this.appearance = options.appearance || new Appearance();
   }
 
   input_type(key: string) {
@@ -54,22 +69,38 @@ export class VoxelizedPhantom {
   fictitious_energy: Value;
   gamma_discard_energy: Value;
 
-  constructor() {
-    this.name = '';
-    this.insert = '';
-    this.image = '';
-    this.material_database = '';
-    this.range_to_material_file = '';
-    this.hu_to_material_file = '';
-    this.attach = '';
-    this.skip_equal_materials = false;
-    this.material_table = '';
-    this.density_table = '';
-    this.density_tolerance = new Value();
-    this.output_material_database_filename = '';
-    this.output_hu_material_filename = '';
-    this.fictitious_energy = new Value();
-    this.gamma_discard_energy = new Value();
+  constructor(options: {
+    name?: string,
+    insert?: string,
+    image?: string,
+    material_database?: string,
+    range_to_material_file?: string,
+    hu_to_material_file?: string,
+    attach?: string,
+    skip_equal_materials?: boolean,
+    material_table?: string,
+    density_table?: string,
+    density_tolerance?: Value,
+    output_material_database_filename?: string,
+    output_hu_material_filename?: string,
+    fictitious_energy?: Value,
+    gamma_discard_energy?: Value
+  } = {}) {
+    this.name = options.name || '';
+    this.insert = options.insert || '';
+    this.image = options.image || '';
+    this.material_database = options.material_database || '';
+    this.range_to_material_file = options.range_to_material_file || '';
+    this.hu_to_material_file = options.hu_to_material_file || '';
+    this.attach = options.attach || '';
+    this.skip_equal_materials = options.skip_equal_materials || false;
+    this.material_table = options.material_table || '';
+    this.density_table = options.density_table || '';
+    this.density_tolerance = options.density_tolerance || new Value();
+    this.output_material_database_filename = options.output_material_database_filename || '';
+    this.output_hu_material_filename = options.output_hu_material_filename || '';
+    this.fictitious_energy = options.fictitious_energy || new Value();
+    this.gamma_discard_energy = options.gamma_discard_energy || new Value();
   }
 
   input_type(key: string) {
@@ -97,9 +128,12 @@ export class ShapeSub {
   type: string;
   content: Shape;
 
-  constructor() {
-    this.type = 'undefined';
-    this.content = undefined;
+  constructor(options: {
+    type?: string,
+    content?: Shape
+  } = {}) {
+    this.type = options.type || 'undefined';
+    this.content = options.content || undefined;
   }
 
   input_type(key: string) {
@@ -151,14 +185,22 @@ export class Appearance {
   force_solid: boolean;
   force_wireframe: boolean;
 
-  constructor() {
-    this.color = '';
-    this.visible = false;
-    this.daughters_invisible = false;
-    this.line_style = '';
-    this.line_width = null;
-    this.force_solid = false;
-    this.force_wireframe = false;
+  constructor(options: {
+    color?: string,
+    visible?: boolean,
+    daughters_invisible?: boolean,
+    line_style?: string,
+    line_width?: number,
+    force_solid?: boolean,
+    force_wireframe?: boolean
+  } = {}) {
+    this.color = options.color || '';
+    this.visible = options.visible || false;
+    this.daughters_invisible = options.daughters_invisible || false;
+    this.line_style = options.line_style || '';
+    this.line_width = options.line_width || null;
+    this.force_solid = options.force_solid || false;
+    this.force_wireframe = options.force_wireframe || false;
   }
 
   input_type(key: string) {
@@ -181,9 +223,11 @@ export class Shape {
 export class Box extends Shape {
   size: Vec3;
 
-  constructor() {
+  constructor(options: {
+    size?: Vec3
+  } = {}) {
     super();
-    this.size = new Vec3();
+    this.size = options.size || new Vec3();
   }
 
   input_type(key: string) {
@@ -201,14 +245,21 @@ export class Sphere extends Shape {
   theta_start: Value;
   delta_theta: Value;
 
-  constructor() {
+  constructor(options: {
+    rmin?: Value,
+    rmax?: Value,
+    phi_start?: Value,
+    delta_phi?: Value,
+    theta_start?: Value,
+    delta_theta?: Value
+  } = {}) {
     super();
-    this.rmin = new Value();
-    this.rmax = new Value();
-    this.phi_start = new Value();
-    this.delta_phi = new Value();
-    this.theta_start = new Value();
-    this.delta_theta = new Value();
+    this.rmin = options.rmin || new Value();
+    this.rmax = options.rmax || new Value();
+    this.phi_start = options.phi_start || new Value();
+    this.delta_phi = options.delta_phi || new Value();
+    this.theta_start = options.theta_start || new Value();
+    this.delta_theta = options.delta_theta || new Value();
   }
 
   input_type(key: string) {
@@ -230,13 +281,19 @@ export class Cylinder extends Shape {
   phi_start: Value;
   delta_phi: Value;
 
-  constructor() {
+  constructor(options: {
+    rmin?: Value,
+    rmax?: Value,
+    height?: Value,
+    phi_start?: Value,
+    delta_phi?: Value
+  } = {}) {
     super();
-    this.rmin = new Value();
-    this.rmax = new Value();
-    this.height = new Value();
-    this.phi_start = new Value();
-    this.delta_phi = new Value();
+    this.rmin = options.rmin || new Value();
+    this.rmax = options.rmax || new Value();
+    this.height = options.height || new Value();
+    this.phi_start = options.phi_start || new Value();
+    this.delta_phi = options.delta_phi || new Value();
   }
 
   input_type(key: string) {
@@ -259,15 +316,23 @@ export class Cone extends Shape {
   phi_start: Value;
   delta_phi: Value;
 
-  constructor() {
+  constructor(options: {
+    rmin1?: Value,
+    rmax1?: Value,
+    rmin2?: Value,
+    rmax2?: Value,
+    height?: Value,
+    phi_start?: Value,
+    delta_phi?: Value
+  } = {}) {
     super();
-    this.rmin1 = new Value();
-    this.rmax1 = new Value();
-    this.rmin2 = new Value();
-    this.rmax2 = new Value();
-    this.height = new Value();
-    this.phi_start = new Value();
-    this.delta_phi = new Value();
+    this.rmin1 = options.rmin1 || new Value();
+    this.rmax1 = options.rmax1 || new Value();
+    this.rmin2 = options.rmin2 || new Value();
+    this.rmax2 = options.rmax2 || new Value();
+    this.height = options.height || new Value();
+    this.phi_start = options.phi_start || new Value();
+    this.delta_phi = options.delta_phi || new Value();
   }
 
   input_type(key: string) {
@@ -288,11 +353,15 @@ export class Ellipsoid extends Shape {
   z_bottom_cut: Value;
   z_top_cut: Value;
 
-  constructor() {
+  constructor(options: {
+    size?: Vec3,
+    z_bottom_cut?: Value,
+    z_top_cut?: Value
+  } = {}) {
     super();
-    this.size = new Vec3();
-    this.z_bottom_cut = new Value();
-    this.z_top_cut = new Value();
+    this.size = options.size || new Vec3();
+    this.z_bottom_cut = options.z_bottom_cut || new Value();
+    this.z_top_cut = options.z_top_cut || new Value();
   }
 
   input_type(key: string) {
@@ -309,11 +378,15 @@ export class EllipticalTube extends Shape {
   short: Value;
   height: Value;
 
-  constructor() {
+  constructor(options: {
+    long?: Value,
+    short?: Value,
+    height?: Value
+  } = {}) {
     super();
-    this.long = new Value();
-    this.short = new Value();
-    this.height = new Value();
+    this.long = options.long || new Value();
+    this.short = options.short || new Value();
+    this.height = options.height || new Value();
   }
 
   input_type(key: string) {
@@ -328,9 +401,11 @@ export class EllipticalTube extends Shape {
 export class Tessellated extends Shape {
   path_to_vertices_file: string;
 
-  constructor() {
+  constructor(options: {
+    path_to_vertices_file?: string
+  } = {}) {
     super();
-    this.path_to_vertices_file = '';
+    this.path_to_vertices_file = options.path_to_vertices_file || '';
   }
 
   input_type(key: string) {
@@ -345,11 +420,15 @@ export class TetMeshBox extends Shape {
   unit_of_length: string;
   path_to_attribute_map: string;
 
-  constructor() {
+  constructor(options: {
+    path_to_ele_file?: string,
+    unit_of_length?: string,
+    path_to_attribute_map?: string
+  } = {}) {
     super();
-    this.path_to_ele_file = '';
-    this.unit_of_length = '';
-    this.path_to_attribute_map = '';
+    this.path_to_ele_file = options.path_to_ele_file || '';
+    this.unit_of_length = options.unit_of_length || '';
+    this.path_to_attribute_map = options.path_to_attribute_map || '';
   }
 
   input_type(key: string) {
@@ -370,15 +449,23 @@ export class TRPD extends Shape {
   box_size: Vec3;
   box_pos: Vec3;
 
-  constructor() {
+  constructor(options: {
+    x1?: Value,
+    y1?: Value,
+    x2?: Value,
+    y2?: Value,
+    z?: Value,
+    box_size?: Vec3,
+    box_pos?: Vec3
+  } = {}) {
     super();
-    this.x1 = new Value();
-    this.y1 = new Value();
-    this.x2 = new Value();
-    this.y2 = new Value();
-    this.z = new Value();
-    this.box_size = new Vec3();
-    this.box_pos = new Vec3();
+    this.x1 = options.x1 || new Value();
+    this.y1 = options.y1 || new Value();
+    this.x2 = options.x2 || new Value();
+    this.y2 = options.y2 || new Value();
+    this.z = options.z || new Value();
+    this.box_size = options.box_size || new Vec3();
+    this.box_pos = options.box_pos || new Vec3();
   }
 
   input_type(key: string) {
@@ -398,10 +485,13 @@ export class Hexagone extends Shape {
   radius: Value;
   height: Value;
 
-  constructor() {
+  constructor(options: {
+    radius?: Value,
+    height?: Value
+  } = {}) {
     super();
-    this.radius = new Value();
-    this.height = new Value();
+    this.radius = options.radius || new Value();
+    this.height = options.height || new Value();
   }
 
   input_type(key: string) {
@@ -416,10 +506,13 @@ export class Wedge extends Shape {
   narrower_xlength: Value;
   size: Vec3;
 
-  constructor() {
+  constructor(options: {
+    narrower_xlength?: Value,
+    size?: Vec3
+  } = {}) {
     super();
-    this.narrower_xlength = new Value();
-    this.size = new Vec3();
+    this.narrower_xlength = options.narrower_xlength || new Value();
+    this.size = options.size || new Vec3();
   }
 
   input_type(key: string) {
@@ -434,9 +527,12 @@ export class Value {
   num: number;
   unit: string;
 
-  constructor() {
-    this.num = null;
-    this.unit = '';
+  constructor(options: {
+    num?: number,
+    unit?: string
+  } = {}) {
+    this.num = options.num || null;
+    this.unit = options.unit || '';
   }
 
   input_type(key: string) {
@@ -451,9 +547,12 @@ export class Vec3 {
   value: [number, number, number];
   unit: string;
 
-  constructor() {
-    this.value = [null, null, null];
-    this.unit = '';
+  constructor(options: {
+    value?: [number, number, number],
+    unit?: string
+  } = {}) {
+    this.value = options.value || [null, null, null];
+    this.unit = options.unit || '';
   }
 
   input_type(key: string) {
@@ -468,9 +567,9 @@ export class VariableArr {
   type: string;
   value: Array<any>;
 
-  constructor(type: string) {
+  constructor(type: string, value?: Array<any>) {
     this.type = type;
-    this.value = [];
+    this.value = value || [];
   }
 
   add() {
@@ -478,6 +577,7 @@ export class VariableArr {
       case 'string': this.value.push(''); break;
       case 'number': this.value.push(null); break;
       case 'Volume': this.value.push(new Volume()); break;
+      case 'Value': this.value.push(new Value()); break;
       case 'PlacementTranslation': this.value.push(new PlacementTranslation()); break;
       case 'PlacementRotation': this.value.push(new PlacementRotation()); break;
       case'PlacementObject': this.value.push(new PlacementObject()); break;
@@ -494,6 +594,14 @@ export class VariableArr {
       case 'SphereRepeater': this.value.push(new SphereRepeater()); break;
       case'GenericRepeater': this.value.push(new GenericRepeater()); break;
       case 'RepeatObject': this.value.push(new RepeatObject()); break;
+      case 'Process': this.value.push(new Process()); break;
+      case 'SetDatasetObject': this.value.push(new SetDatasetObject()); break;
+      case 'Window': this.value.push(new Window()); break;
+      case'LocalBlurring': this.value.push(new LocalBlurring()); break;
+      case 'TransferEfficiency': this.value.push(new TransferEfficiency()); break;
+      case 'LightYield': this.value.push(new LightYield()); break;
+      case 'IntrinsicResolutionBlurring': this.value.push(new IntrinsicResolutionBlurring()); break;
+      case 'QuantumEfficiency': this.value.push(new QuantumEfficiency()); break;
     }
     console.log('add', this.value.length);
   }

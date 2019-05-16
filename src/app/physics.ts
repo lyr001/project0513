@@ -22,13 +22,20 @@ export class Physics {
   process: VariableArr;
   mag_field: Vec3;
 
-  constructor() {
-    this.physics_list = '';
-    this.cut_in_world = new CutInRegion();
-    this.cut_in_patient = new CutInRegion();
-    this.activate_step_limiter = '';
-    this.process = new VariableArr('Process');
-    this.mag_field = new Vec3();
+  constructor(options: {
+    physics_list?: string,
+    cut_in_world?: CutInRegion,
+    cut_in_patient?: CutInRegion,
+    activate_step_limiter?: string,
+    process?: VariableArr,
+    mag_field?: Vec3
+  } = {}) {
+    this.physics_list = options.physics_list || '';
+    this.cut_in_world = options.cut_in_world || new CutInRegion();
+    this.cut_in_patient = options.cut_in_patient || new CutInRegion();
+    this.activate_step_limiter = options.activate_step_limiter || '';
+    this.process = options.process || new VariableArr('Process');
+    this.mag_field = options.mag_field || new Vec3();
   }
 
   input_type(key: string) {
@@ -50,12 +57,18 @@ export class CutInRegion {
   proton: Value;
   max_step: Value;
 
-  constructor() {
-    this.gamma = new Value();
-    this.electron = new Value();
-    this.positron = new Value();
-    this.proton = new Value();
-    this.max_step = new Value();
+  constructor(options: {
+    gamma?: Value,
+    electron?: Value,
+    positron?: Value,
+    proton?: Value,
+    max_step?: Value
+  } = {}) {
+    this.gamma = options.gamma || new Value();
+    this.electron = options.electron || new Value();
+    this.positron = options.positron || new Value();
+    this.proton = options.proton || new Value();
+    this.max_step = options.max_step || new Value();
   }
 
   input_type(key: string) {
@@ -75,11 +88,16 @@ export class Process {
   particle: string;
   model: Model;
 
-  constructor() {
-    this.add = false;
-    this.process_name = '';
-    this.particle = '';
-    this.model = new Model();
+  constructor(options: {
+    add?: boolean,
+    process_name?: string,
+    particle?: string,
+    model?: Model
+  } = {}) {
+    this.add = options.add || false;
+    this.process_name = options.process_name || '';
+    this.particle = options.particle || '';
+    this.model = options.model || new Model();
   }
 
   input_type(key: string) {
@@ -100,13 +118,20 @@ export class Model {
   e_max: SetE;
   e_min: SetE;
 
-  constructor() {
-    this.set = false;
-    this.model_name = '';
-    this.particle = '';
-    this.energy_range = false;
-    this.e_max = new SetE();
-    this.e_min = new SetE();
+  constructor(options: {
+    set?: boolean,
+    model_name?: string,
+    particle?: string,
+    energy_range?: boolean,
+    e_max?: SetE,
+    e_min?: SetE
+  } = {}) {
+    this.set = options.set || false;
+    this.model_name = options.model_name || '';
+    this.particle = options.particle || '';
+    this.energy_range = options.energy_range || false;
+    this.e_max = options.e_max || new SetE();
+    this.e_min = options.e_min || new SetE();
   }
 
   input_type(key: string) {
@@ -126,10 +151,14 @@ export class SetE {
   particle: string;
   option: string;
 
-  constructor() {
-    this.value = new Value();
-    this.particle = '';
-    this.option = '';
+  constructor(options: {
+    value?: Value,
+    particle?: string,
+    option?: string
+  } = {}) {
+    this.value = options.value || new Value();
+    this.particle = options.particle || '';
+    this.option = options.option || '';
   }
 
   input_type(key: string) {
@@ -147,11 +176,16 @@ export class Dataset {
   particle: string;
   target: VariableArr;
 
-  constructor() {
-    this.set = false;
-    this.model_name = '';
-    this.particle = '';
-    this.target = new VariableArr('SetDatasetObject');
+  constructor(options: {
+    set?: boolean,
+    model_name?: string,
+    particle?: string,
+    target?: VariableArr
+  } = {}) {
+    this.set = options.set || false;
+    this.model_name = options.model_name || '';
+    this.particle = options.particle || '';
+    this.target = options.target || new VariableArr('SetDatasetObject');
   }
 
   input_type(key: string) {
@@ -168,9 +202,12 @@ export class SetDatasetObject {
   type: string;
   content: Process | Dataset;
 
-  constructor() {
-    this.type = 'undefined';
-    this.content = undefined;
+  constructor(options: {
+    type?: string,
+    content?: Process | Dataset
+  } = {}) {
+    this.type = options.type || 'undefined';
+    this.content = options.content || undefined;
   }
 
   input_type(key: string) {
@@ -202,11 +239,15 @@ export class Flat extends Distribution {
   max: Value;
   amplitude: Value;
 
-  constructor() {
+  constructor(options: {
+    min?: Value,
+    max?: Value,
+    amplitude?: Value
+  } = {}) {
     super();
-    this.min = new Value();
-    this.max = new Value();
-    this.amplitude = new Value();
+    this.min = options.min || new Value();
+    this.max = options.max || new Value();
+    this.amplitude = options.amplitude || new Value();
   }
 
   input_type(key: string) {
@@ -223,11 +264,15 @@ export class Gaussian extends Distribution {
   sigma: Value;
   amplitude: Value;
 
-  constructor() {
+  constructor(options: {
+    mean?: Value,
+    sigma?: Value,
+    amplitude?: Value
+  } = {}) {
     super();
-    this.mean = new Value();
-    this.sigma = new Value();
-    this.amplitude = new Value();
+    this.mean = options.mean || new Value();
+    this.sigma = options.sigma || new Value();
+    this.amplitude = options.amplitude || new Value();
   }
 
   input_type(key: string) {
@@ -243,10 +288,13 @@ export class Exponential extends Distribution {
   lambda: number;
   amplitude: Value;
 
-  constructor() {
+  constructor(options: {
+    lambda?: number,
+    amplitude?: Value
+  } = {}) {
     super();
-    this.lambda = null;
-    this.amplitude = new Value();
+    this.lambda = options.lambda || null;
+    this.amplitude = options.amplitude || new Value();
   }
 
   input_type(key: string) {
@@ -264,13 +312,19 @@ export class Manual extends Distribution {
   add_point: number;
   auto_x_start: number;
 
-  constructor() {
+  constructor(options: {
+    unit_x?: string,
+    unit_y?: string,
+    insert_point?: [number, number],
+    add_point?: number,
+    auto_x_start?: number
+  } = {}) {
     super();
-    this.unit_x = '';
-    this.unit_y = '';
-    this.insert_point = [null, null];
-    this.add_point = null;
-    this.auto_x_start = null;
+    this.unit_x = options.unit_x || '';
+    this.unit_y = options.unit_y || '';
+    this.insert_point = options.insert_point || [null, null];
+    this.add_point = options.add_point || null;
+    this.auto_x_start = options.auto_x_start || null;
   }
 
   input_type(key: string) {
@@ -293,15 +347,23 @@ export class File extends Distribution {
   column_x: number;
   column_y: number;
 
-  constructor() {
+  constructor(options: {
+    unit_x?: string,
+    unit_y?: string,
+    auto_x?: boolean,
+    auto_x_start?: Value,
+    file_name?: string,
+    column_x?: number,
+    column_y?: number
+  } = {}) {
     super();
-    this.unit_x = '';
-    this.unit_y = '';
-    this.auto_x = false;
-    this.auto_x_start = new Value();
-    this.file_name = '';
-    this.column_x = null;
-    this.column_y = null;
+    this.unit_x = options.unit_x || '';
+    this.unit_y = options.unit_y || '';
+    this.auto_x = options.auto_x || false;
+    this.auto_x_start = options.auto_x_start || new Value();
+    this.file_name = options.file_name || '';
+    this.column_x = options.column_x || null;
+    this.column_y = options.column_y || null;
   }
 
   input_type(key: string) {
@@ -321,9 +383,12 @@ export class DistributionSub {
   type: string;
   content: Distribution;
 
-  constructor() {
-    this.type = 'undefined';
-    this.content = undefined;
+  constructor(optiond: {
+    type?: string,
+    content?: Distribution
+  } = {}) {
+    this.type = optiond.type || 'undefined';
+    this.content = optiond.content || undefined;
   }
 
   input_type(key: string) {
@@ -372,24 +437,42 @@ export class Digitizer {
   coincidences: Coincidences;
   coincidence_sorter: CoincidenceSorter;
 
-  constructor() {
-    this.adder = new Adder();
-    this.readout = new Readout();
-    this.blurring = new Blurring();
-    this.calibration = new Calibration();
-    this.crosstalk = new Crosstalk();
-    this.thresholder = new Thresholder();
-    this.upholder = new Upholder();
-    this.window = new VariableArr('Window');
-    this.sigmoidal_thresholder = new SigmoidalThresholder();
-    this.time_resolution = new TimeResolution();
-    this.noise = new Noise();
-    this.local_efficiency = new LocalEfficiency();
-    this.buffer = new Buffer();
-    this.pileup = new Pileup();
-    this.deadtime = new DeadTime();
-    this.coincidences = new Coincidences();
-    this.coincidence_sorter = new CoincidenceSorter();
+  constructor(options: {
+    adder?: Adder,
+    readout?: Readout,
+    blurring?: Blurring,
+    calibration?: Calibration,
+    crosstalk?: Crosstalk,
+    thresholder?: Thresholder,
+    upholder?: Upholder,
+    window?: VariableArr,
+    sigmoidal_thresholder?: SigmoidalThresholder,
+    time_resolution?: TimeResolution,
+    noise?: Noise,
+    local_efficiency?: LocalEfficiency,
+    buffer?: Buffer,
+    pileup?: Pileup,
+    deadtime?: DeadTime,
+    coincidences?: Coincidences,
+    coincidence_sorter?: CoincidenceSorter
+  } = {}) {
+    this.adder = options.adder || new Adder();
+    this.readout = options.readout || new Readout();
+    this.blurring = options.blurring || new Blurring();
+    this.calibration = options.calibration || new Calibration();
+    this.crosstalk = options.crosstalk || new Crosstalk();
+    this.thresholder = options.thresholder || new Thresholder();
+    this.upholder = options.upholder || new Upholder();
+    this.window = options.window || new VariableArr('Window');
+    this.sigmoidal_thresholder = options.sigmoidal_thresholder || new SigmoidalThresholder();
+    this.time_resolution = options.time_resolution || new TimeResolution();
+    this.noise = options.noise || new Noise();
+    this.local_efficiency = options.local_efficiency || new LocalEfficiency();
+    this.buffer = options.buffer || new Buffer();
+    this.pileup = options.pileup || new Pileup();
+    this.deadtime = options.deadtime || new DeadTime();
+    this.coincidences = options.coincidences || new Coincidences();
+    this.coincidence_sorter = options.coincidence_sorter || new CoincidenceSorter();
   }
 
   input_type(key: string) {
@@ -419,9 +502,12 @@ export class Adder {
   readonly insert: boolean;
   adder_compton: boolean;
 
-  constructor() {
-    this.insert = true;
-    this.adder_compton = false;
+  constructor(options: {
+    insert?: boolean,
+    adder_compton?: boolean
+  } = {}) {
+    this.insert = options.insert || true;
+    this.adder_compton = options.adder_compton || false;
   }
 
   input_type(key: string) {
@@ -437,10 +523,14 @@ export class Readout {
   policy: string;
   depth: number;
 
-  constructor() {
-    this.insert = true;
-    this.policy = '';
-    this.depth = null;
+  constructor(options: {
+    insert?: boolean,
+    policy?: string,
+    depth?: number
+  } = {}) {
+    this.insert = options.insert || true;
+    this.policy = options.policy || '';
+    this.depth = options.depth || null;
   }
 
   input_type(key: string) {
@@ -463,16 +553,26 @@ export class Blurring {
   quantum_efficiency: VariableArr;
   spblurring: Spblurring;
 
-  constructor() {
-    this.insert = false;
-    this.law = new BlurringLawSub();
-    this.crystal_blurring = new CrystalBlurring();
-    this.local_blurring = new VariableArr('LocalBlurring');
-    this.transfer_efficiency = new VariableArr('TransferEfficiency');
-    this.light_yield = new VariableArr('LightYield');
-    this.intrinsic_resolution_blurring = new VariableArr('IntrinsicResolutionBlurring');
-    this.quantum_efficiency = new VariableArr('QuantumEfficiency');
-    this.spblurring = new Spblurring();
+  constructor(options: {
+    insert?: boolean,
+    law?: BlurringLawSub,
+    crystal_blurring?: CrystalBlurring,
+    local_blurring?: VariableArr,
+    transfer_efficiency?: VariableArr,
+    light_yield?: VariableArr,
+    intrinsic_resolution_blurring?: VariableArr,
+    quantum_efficiency?: VariableArr,
+    spblurring?: Spblurring
+  } = {}) {
+    this.insert = options.insert || false;
+    this.law = options.law || new BlurringLawSub();
+    this.crystal_blurring = options.crystal_blurring || new CrystalBlurring();
+    this.local_blurring = options.local_blurring || new VariableArr('LocalBlurring');
+    this.transfer_efficiency = options.transfer_efficiency || new VariableArr('TransferEfficiency');
+    this.light_yield = options.light_yield || new VariableArr('LightYield');
+    this.intrinsic_resolution_blurring = options.intrinsic_resolution_blurring || new VariableArr('IntrinsicResolutionBlurring');
+    this.quantum_efficiency = options.quantum_efficiency || new VariableArr('QuantumEfficiency');
+    this.spblurring = options.spblurring || new Spblurring();
   }
 
   input_type(key: string) {
@@ -516,10 +616,13 @@ export class InverseSquareLaw extends BlurringLaw {
   resolution: number;
   energy_of_reference: Value;
 
-  constructor() {
+  constructor(options: {
+    resolution?: number,
+    energy_of_reference?: Value
+  } = {}) {
     super();
-    this.resolution = null;
-    this.energy_of_reference = new Value();
+    this.resolution = options.resolution || null;
+    this.energy_of_reference = options.energy_of_reference || new Value();
   }
 
   input_type(key: string) {
@@ -535,11 +638,15 @@ export class LinearLaw extends BlurringLaw {
   energy_of_reference: Value;
   slope: Value;
 
-  constructor() {
+  constructor(options: {
+    resolution?: number,
+    energy_of_reference?: Value,
+    slope?: Value
+  } = {}) {
     super();
-    this.resolution = null;
-    this.energy_of_reference = new Value();
-    this.slope = new Value();
+    this.resolution = options.resolution || null;
+    this.energy_of_reference = options.energy_of_reference || new Value();
+    this.slope = options.slope || new Value();
   }
 
   input_type(key: string) {
@@ -555,9 +662,12 @@ export class BlurringLawSub {
   type: string;
   content: BlurringLaw;
 
-  constructor() {
-    this.type = 'undefined';
-    this.content = undefined;
+  constructor(options: {
+    type?: string,
+    content?: BlurringLaw
+  } = {}) {
+    this.type = options.type || 'undefined';
+    this.content = options.content || undefined;
   }
 
   input_type(key: string) {
@@ -587,12 +697,18 @@ export class CrystalBlurring {
   crystal_qe: number;
   crystal_energy_of_reference: Value;
 
-  constructor() {
-    this.insert = false;
-    this.crystal_resolution_min = null;
-    this.crystal_resolution_max = null;
-    this.crystal_qe = null;
-    this.crystal_energy_of_reference = new Value();
+  constructor(options: {
+    insert?: boolean,
+    crystal_resolution_min?: number,
+    crystal_resolution_max?: number,
+    crystal_qe?: number,
+    crystal_energy_of_reference?: Value
+  } = {}) {
+    this.insert = options.insert || false;
+    this.crystal_resolution_min = options.crystal_resolution_min || null;
+    this.crystal_resolution_max = options.crystal_resolution_max || null;
+    this.crystal_qe = options.crystal_qe || null;
+    this.crystal_energy_of_reference = options.crystal_energy_of_reference || new Value();
   }
 
   input_type(key: string) {
@@ -612,11 +728,16 @@ export class LocalBlurring {
   resolution: number;
   energy_of_reference: Value;
 
-  constructor() {
-    this.insert = false;
-    this.volume = '';
-    this.resolution = null;
-    this.energy_of_reference = new Value();
+  constructor(options: {
+    insert?: boolean,
+    volume?: string,
+    resolution?: number,
+    energy_of_reference?: Value
+  } = {}) {
+    this.insert = options.insert || false;
+    this.volume = options.volume || '';
+    this.resolution = options.resolution || null;
+    this.energy_of_reference = options.energy_of_reference || new Value();
   }
 
   input_type(key: string) {
@@ -634,10 +755,14 @@ export class TransferEfficiency {
   volume: string;
   tecoef: number;
 
-  constructor() {
-    this.insert = false;
-    this.volume = '';
-    this.tecoef = null;
+  constructor(options: {
+    insert?: boolean,
+    volume?: string,
+    tecoef?: number
+  } = {}) {
+    this.insert = options.insert || false;
+    this.volume = options.volume || '';
+    this.tecoef = options.tecoef || null;
   }
 
   input_type(key: string) {
@@ -654,10 +779,14 @@ export class LightYield {
   volume: string;
   light_output: number;
 
-  constructor() {
-    this.insert = false;
-    this.volume = '';
-    this.light_output = null;
+  constructor(options: {
+    insert?: boolean,
+    volume?: string,
+    light_output?: number
+  } = {}) {
+    this.insert = options.insert || false;
+    this.volume = options.volume || '';
+    this.light_output = options.light_output || null;
   }
 
   input_type(key: string) {
@@ -675,11 +804,16 @@ export class IntrinsicResolutionBlurring {
   intrinsic_resolution: number;
   energy_of_reference: Value;
 
-  constructor() {
-    this.insert = false;
-    this.volume = '';
-    this.intrinsic_resolution = null;
-    this.energy_of_reference = new Value();
+  constructor(options: {
+    insert?: boolean,
+    volume?: string,
+    intrinsic_resolution?: number,
+    energy_of_reference?: Value
+  } = {}) {
+    this.insert = options.insert || false;
+    this.volume = options.volume || '';
+    this.intrinsic_resolution = options.intrinsic_resolution || null;
+    this.energy_of_reference = options.energy_of_reference || new Value();
   }
 
   input_type(key: string) {
@@ -697,10 +831,14 @@ export class QuantumEfficiency {
   volume: string;
   unique_qe: UniqueQeSub;       // number | string[]
 
-  constructor() {
-    this.insert = false;
-    this.volume = '';
-    this.unique_qe = undefined;
+  constructor(options: {
+    insert?: boolean,
+    volume?: string,
+    unique_qe?: UniqueQeSub
+  } = {}) {
+    this.insert = options.insert || false;
+    this.volume = options.volume || '';
+    this.unique_qe = options.unique_qe || undefined;
   }
 
   input_type(key: string) {
@@ -716,9 +854,12 @@ export class UniqueQeSub {
   type: string;
   content: number | VariableArr;
 
-  constructor() {
-    this.type = 'undefined';
-    this.content = undefined;
+  constructor(options: {
+    type?: string,
+    content?: number | VariableArr
+  } = {}) {
+    this.type = options.type || 'undefined';
+    this.content = options.content || undefined;
   }
 
   input_type(key: string) {
@@ -746,10 +887,14 @@ export class Spblurring {
   spresolution: Value;
   verbose: number;
 
-  constructor() {
-    this.insert = false;
-    this.spresolution = new Value();
-    this.verbose = null;
+  constructor(options: {
+    insert?: boolean,
+    spresolution?: Value,
+    verbose?: number
+  } = {}) {
+    this.insert = options.insert || false;
+    this.spresolution = options.spresolution || new Value();
+    this.verbose = options.verbose || null;
   }
 
   input_type(key: string) {
@@ -765,9 +910,12 @@ export class Calibration {
   insert: boolean;
   value: number;
 
-  constructor() {
-    this.insert = false;
-    this.value = null;
+  constructor(options: {
+    insert?: boolean,
+    value?: number
+  } = {}) {
+    this.insert = options.insert || false;
+    this.value = options.value || null;
   }
 
   input_type(key: string) {
@@ -784,11 +932,16 @@ export class Crosstalk {
   edges_fraction: number;
   corners_fraction: number;
 
-  constructor() {
-    this.insert = false;
-    this.crosstalk_volume = '';
-    this.edges_fraction = null;
-    this.corners_fraction = null;
+  constructor(options: {
+    insert?: boolean,
+    crosstalk_volume?: string,
+    edges_fraction?: number,
+    corners_fraction?: number
+  } = {}) {
+    this.insert = options.insert || false;
+    this.crosstalk_volume = options.crosstalk_volume || '';
+    this.edges_fraction = options.edges_fraction || null;
+    this.corners_fraction = options.corners_fraction || null;
   }
 
   input_type(key: string) {
@@ -805,9 +958,12 @@ export class Thresholder {
   insert: boolean;
   value: Value;
 
-  constructor() {
-    this.insert = false;
-    this.value = new Value();
+  constructor(options: {
+    insert?: boolean,
+    value?: Value
+  } = {}) {
+    this.insert = options.insert || false;
+    this.value = options.value || new Value();
   }
 
   input_type(key: string) {
@@ -822,9 +978,12 @@ export class Upholder {
   insert: boolean;
   value: Value;
 
-  constructor() {
-    this.insert = false;
-    this.value = new Value();
+  constructor(options: {
+    insert?: boolean,
+    value?: Value
+  } = {}) {
+    this.insert = options.insert || false;
+    this.value = options.value || new Value();
   }
 
   input_type(key: string) {
@@ -841,11 +1000,16 @@ export class Window {
   thresholder: Thresholder;
   uphold: Upholder;
 
-  constructor() {
-    this.insert = false;
-    this.input_name = '';
-    this.thresholder = new Thresholder();
-    this.uphold = new Upholder();
+  constructor(options: {
+    insert?: boolean,
+    input_name?: string,
+    thresholder?: Thresholder,
+    uphold?: Upholder
+  } = {}) {
+    this.insert = options.insert || false;
+    this.input_name = options.input_name || '';
+    this.thresholder = options.thresholder || new Thresholder();
+    this.uphold = options.uphold || new Upholder();
   }
 
   input_type(key: string) {
@@ -864,11 +1028,16 @@ export class SigmoidalThresholder {
   threshold_alpha: number;
   threshold_percent: number;
 
-  constructor() {
-    this.insert = false;
-    this.threshold = new Value();
-    this.threshold_alpha = null;
-    this.threshold_percent = null;
+  constructor(options: {
+    insert?: boolean,
+    threshold?: Value,
+    threshold_alpha?: number,
+    threshold_percent?: number
+  } = {}) {
+    this.insert = options.insert || false;
+    this.threshold = options.threshold || new Value();
+    this.threshold_alpha = options.threshold_alpha || null;
+    this.threshold_percent = options.threshold_percent || null;
   }
 
   input_type(key: string) {
@@ -885,9 +1054,12 @@ export class TimeResolution {
   insert: boolean;
   value: Value;
 
-  constructor() {
-    this.insert = false;
-    this.value = new Value();
+  constructor(options: {
+    insert?: boolean,
+    value?: Value
+  } = {}) {
+    this.insert = options.insert || false;
+    this.value = options.value || new Value();
   }
 
   input_type(key: string) {
@@ -903,10 +1075,14 @@ export class Noise {
   deltaT_distribution: DistributionSub;
   energy_distribution: DistributionSub;
 
-  constructor() {
-    this.insert = false;
-    this.deltaT_distribution = new DistributionSub();
-    this.energy_distribution = new DistributionSub();
+  constructor(options: {
+    insert?: boolean,
+    deltaT_distribution?: DistributionSub,
+    energy_distribution?: DistributionSub
+  } = {}) {
+    this.insert = options.insert || false;
+    this.deltaT_distribution = options.deltaT_distribution || new DistributionSub();
+    this.energy_distribution = options.energy_distribution || new DistributionSub();
   }
 
   input_type(key: string) {
@@ -920,20 +1096,24 @@ export class Noise {
 /////////////////////////////////////////////////////////////////////////////////////////////////
 export class LocalEfficiency {
   insert: boolean;
-  Level1: DistributionSub;
-  Level2: DistributionSub;
+  level1: DistributionSub;
+  level2: DistributionSub;
 
-  constructor() {
-    this.insert = false;
-    this.Level1 = new DistributionSub();
-    this.Level2 = new DistributionSub();
+  constructor(options: {
+    insert?: boolean,
+    level1?: DistributionSub,
+    level2?: DistributionSub
+  } = {}) {
+    this.insert = options.insert || false;
+    this.level1 = options.level1 || new DistributionSub();
+    this.level2 = options.level2 || new DistributionSub();
   }
 
   input_type(key: string) {
     switch (key) {
       case 'insert': return 'boolean'; break;
-      case 'Level1': return 'DistributionSub'; break;
-      case 'Level2': return 'DistributionSub'; break;
+      case 'level1': return 'DistributionSub'; break;
+      case 'level2': return 'DistributionSub'; break;
     }
   }
 }
@@ -944,11 +1124,16 @@ export class Buffer {
   read_frequency: Value;
   mode: number;
 
-  constructor() {
-    this.insert = false;
-    this.buffer_size = new Value();
-    this.read_frequency = new Value();
-    this.mode = null;
+  constructor(options: {
+    insert?: boolean,
+    buffer_size?: Value,
+    read_frequency?: Value,
+    mode?: number
+  } = {}) {
+    this.insert = options.insert || false;
+    this.buffer_size = options.buffer_size || new Value();
+    this.read_frequency = options.read_frequency || new Value();
+    this.mode = options.mode || null;
   }
 
   input_type(key: string) {
@@ -966,10 +1151,14 @@ export class Pileup {
   depth: number;
   value: Value;
 
-  constructor() {
-    this.insert = false;
-    this.depth = null;
-    this.value = new Value();
+  constructor(options: {
+    insert?: boolean,
+    depth?: number,
+    value?: Value
+  } = {}) {
+    this.insert = options.insert || false;
+    this.depth = options.depth || null;
+    this.value = options.value || new Value();
   }
 
   input_type(key: string) {
@@ -989,13 +1178,20 @@ export class DeadTime {
   buffer_size: Value;
   buffer_mode: number;
 
-  constructor() {
-    this.insert = false;
-    this.value = new Value();
-    this.mode = '';
-    this.dt_volume = '';
-    this.buffer_size = new Value();
-    this.buffer_mode = null;
+  constructor(options: {
+    insert?: boolean,
+    value?: Value,
+    mode?: string,
+    dt_volume?: string,
+    buffer_size?: Value,
+    buffer_mode?: number
+  } = {}) {
+    this.insert = options.insert || false;
+    this.value = options.value || new Value();
+    this.mode = options.mode || '';
+    this.dt_volume = options.dt_volume || '';
+    this.buffer_size = options.buffer_size || new Value();
+    this.buffer_mode = options.buffer_mode || null;
   }
 
   input_type(key: string) {
@@ -1018,13 +1214,20 @@ export class Coincidences {
   all_pulse_open_coinc_gate: boolean;
   multiple_policy: string;
 
-  constructor() {
-    this.window = new Value();
-    this.min_sector_difference = null;
-    this.offset = new Value();
-    this.depth = null;
-    this.all_pulse_open_coinc_gate = false;
-    this.multiple_policy = '';
+  constructor(options: {
+    window?: Value,
+    min_sector_difference?: number,
+    offset?: Value,
+    depth?: number,
+    all_pulse_open_coinc_gate?: boolean,
+    multiple_policy?: string
+  } = {}) {
+    this.window = options.window || new Value();
+    this.min_sector_difference = options.min_sector_difference || null;
+    this.offset = options.offset || new Value();
+    this.depth = options.depth || null;
+    this.all_pulse_open_coinc_gate = options.all_pulse_open_coinc_gate || false;
+    this.multiple_policy = options.multiple_policy || '';
   }
 
   input_type(key: string) {
@@ -1045,11 +1248,16 @@ export class CoincidenceSorter {
   input_name: string;
   window: Value;
 
-  constructor() {
-    this.insert = false;
-    this.name = '';
-    this.input_name = '';
-    this.window = new Value();
+  constructor(options: {
+    insert?: boolean,
+    name?: string,
+    input_name?: string,
+    window?: Value
+  } = {}) {
+    this.insert = options.insert || false;
+    this.name = options.name || '';
+    this.input_name = options.input_name || '';
+    this.window = options.window || new Value();
   }
 
   input_type(key: string) {

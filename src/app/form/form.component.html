@@ -4,7 +4,7 @@
       <span>{{ key }}:</span>
       <span *ngSwitchCase="'[object String]'">
         <span *ngIf="result.input_type(key) == 'VariableArr'">
-          <input>
+          <!--<input>-->
           <button (click)="add(key); test($event)">添加</button>
           <div *ngFor="let element of result[key].value; let i = index">
             <app-input-form

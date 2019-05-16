@@ -24,15 +24,24 @@ export class Acquisition {
   engine_name: string;
   verbose: number;
 
-  constructor() {
-    this.total_number_of_primaries = null;
-    this.number_of_primaries_perrun = null;
-    this.time_slice = new TimeSliceSub();
-    this.time_start = new Value();
-    this.time_stop = new Value();
-    this.engine_seed = new EngineSeedSub();
-    this.engine_name = '';
-    this.verbose = null;
+  constructor(options: {
+    total_number_of_primaries?: number,
+    number_of_primaries_perrun?: number,
+    time_slice?: TimeSliceSub,
+    time_start?: Value,
+    time_stop?: Value,
+    engine_seed?: EngineSeedSub,
+    engine_name?: string,
+    verbose?: number
+  } = {}) {
+    this.total_number_of_primaries = options.total_number_of_primaries || null;
+    this.number_of_primaries_perrun = options.number_of_primaries_perrun || null;
+    this.time_slice = options.time_slice || new TimeSliceSub();
+    this.time_start = options.time_start || new Value();
+    this.time_stop = options.time_stop || new Value();
+    this.engine_seed = options.engine_seed || new EngineSeedSub();
+    this.engine_name = options.engine_name || '';
+    this.verbose = options.verbose || null;
   }
 
   input_type(key: string) {
@@ -53,9 +62,12 @@ export class TimeSliceSub {
   type: string;
   content: VariableArr | string;
 
-  constructor() {
-    this.type = 'undefined';
-    this.content = undefined;
+  constructor(options: {
+    type?: string,
+    content?: VariableArr | string
+  } = {}) {
+    this.type = options.type || 'undefined';
+    this.content = options.content || undefined;
   }
 
   input_type(key: string) {
@@ -82,9 +94,12 @@ export class EngineSeedSub {
   type: string;
   content: number | string;
 
-  constructor() {
-    this.type = 'undefined';
-    this.content = undefined;
+  constructor(options: {
+    type?: string,
+    content?: number | string
+  } = {}) {
+    this.type = options.type || 'undefined';
+    this.content = options.content || undefined;
   }
 
   input_type(key: string) {
@@ -110,8 +125,10 @@ export class EngineSeedSub {
 export class MaterialDatabase {
   path: string;
 
-  constructor() {
-    this.path = '';
+  constructor(options: {
+    path?: string
+  } = {}) {
+    this.path = options.path || '';
   }
 
   input_type(key: string) {

@@ -18,9 +18,12 @@ export class SourceSub {
   type: string;
   content: Source | VoxelizedSource;
 
-  constructor() {
-    this.type = 'undefined';
-    this.content = undefined;
+  constructor(options: {
+    type?: string,
+    content?: Source | VoxelizedSource
+  } = {}) {
+    this.type = options.type || 'undefined';
+    this.content = options.content || undefined;
   }
 
   input_type(key: string) {
@@ -61,23 +64,40 @@ export class Source {
   minphi: Value;
   maxphi: Value;
 
-  constructor() {
-    this.name = '';
-    this.activity = new Value();
-    this.type = '';
-    this.centre = new Vec3();
-    this.particle = '';
-    this.energytype = '';
-    this.monoenergy = new Value();
-    this.gps_type = '';
-    this.shape = '';
-    this.radius = new Value();
-    this.halfz = new Value();
-    this.angtype = '';
-    this.mintheta = new Value();
-    this.maxtheta = new Value();
-    this.minphi = new Value();
-    this.maxphi = new Value();
+  constructor(options: {
+    name?: string,
+    activity?: Value,
+    type?: string,
+    centre?: Vec3,
+    particle?: string,
+    energytype?: string,
+    monoenergy?: Value,
+    gps_type?: string,
+    shape?: string,
+    radius?: Value,
+    halfz?: Value,
+    angtype?: string,
+    mintheta?: Value,
+    maxtheta?: Value,
+    minphi?: Value,
+    maxphi?: Value
+  } = {}) {
+    this.name = options.name || '';
+    this.activity = options.activity || new Value();
+    this.type = options.type || '';
+    this.centre = options.centre || new Vec3();
+    this.particle = options.particle || '';
+    this.energytype = options.energytype || '';
+    this.monoenergy = options.monoenergy || new Value();
+    this.gps_type = options.gps_type || '';
+    this.shape = options.shape || '';
+    this.radius = options.radius || new Value();
+    this.halfz = options.halfz || new Value();
+    this.angtype = options.angtype || '';
+    this.mintheta = options.mintheta || new Value();
+    this.maxtheta = options.maxtheta || new Value();
+    this.minphi = options.minphi || new Value();
+    this.maxphi = options.maxphi || new Value();
   }
 
   input_type(key: string) {
@@ -123,26 +143,46 @@ export class VoxelizedSource {
   forced_unstable_flag: boolean;
   forced_half_life: Value;
 
-  constructor() {
-    this.name = '';
-    this.insert_reader = '';
-    this.insert_translator = new TranslatorSub();
-    this.read_file = '';
-    this.verbose = false;
-    this.position = new Vec3();
-    this.dump = false;
-    this.type = '';
-    this.particle = '';
-    this.energy_type = '';
-    this.monoenergy = new Value();
-    this.angtype = '';
-    this.mintheta = new Value();
-    this.maxtheta = new Value();
-    this.minphi = new Value();
-    this.maxphi = new Value();
-    this.confine = '';
-    this.forced_unstable_flag = false;
-    this.forced_half_life = new Value();
+  constructor(options: {
+    name?: string,
+    insert_reader?: string,
+    insert_translator?: TranslatorSub,
+    read_file?: string,
+    verbose?: boolean,
+    position?: Vec3,
+    dump?: boolean,
+    type?: string,
+    particle?: string,
+    energy_type?: string,
+    monoenergy?: Value,
+    angtype?: string,
+    mintheta?: Value,
+    maxtheta?: Value,
+    minphi?: Value,
+    maxphi?: Value,
+    confine?: string,
+    forced_unstable_flag?: boolean,
+    forced_half_life?: Value
+  } = {}) {
+    this.name = options.name || '';
+    this.insert_reader = options.insert_reader || '';
+    this.insert_translator = options.insert_translator || new TranslatorSub();
+    this.read_file = options.read_file || '';
+    this.verbose = options.verbose || false;
+    this.position = options.position || new Vec3();
+    this.dump = options.dump || false;
+    this.type = options.type || '';
+    this.particle = options.particle || '';
+    this.energy_type = options.energy_type || '';
+    this.monoenergy = options.monoenergy || new Value();
+    this.angtype = options.angtype || '';
+    this.mintheta = options.mintheta || new Value();
+    this.maxtheta = options.maxtheta || new Value();
+    this.minphi = options.minphi || new Value();
+    this.maxphi = options.maxphi || new Value();
+    this.confine = options.confine || '';
+    this.forced_unstable_flag = options.forced_unstable_flag || false;
+    this.forced_half_life = options.forced_half_life || new Value();
   }
 
   input_type(key: string) {
@@ -173,17 +213,22 @@ export class VoxelizedSource {
 export class Translator {
   insert: boolean;
 
-  constructor() {
-    this.insert = false;
+  constructor(options: {
+    insert?: boolean
+  } = {}) {
+    this.insert = options.insert || false;
   }
 }
 
 export class LinearTranslator extends Translator {
   scale: boolean;
 
-  constructor() {
-    super();
-    this.scale = false;
+  constructor(options: {
+    insert?: boolean,
+    scale?: boolean
+  } = {}) {
+    super({insert: options.insert});
+    this.scale = options.scale || false;
   }
 
   input_type(key: string) {
@@ -198,10 +243,14 @@ export class RangeTranslator extends Translator {
   read_table: string;
   describe: boolean;
 
-  constructor() {
-    super();
-    this.read_table = '';
-    this.describe = false;
+  constructor(options: {
+    insert?: boolean,
+    read_table?: string,
+    describe?: boolean
+  } = {}) {
+    super({insert: options.insert});
+    this.read_table = options.read_table || '';
+    this.describe = options.describe || false;
   }
 
   input_type(key: string) {
@@ -217,9 +266,12 @@ export class TranslatorSub {
   type: string;
   content: Translator;
 
-  constructor() {
-    this.type = 'undefined';
-    this.content = undefined;
+  constructor(options: {
+    type?: string,
+    content?: Translator
+  } = {}) {
+    this.type = options.type || 'undefined';
+    this.content = options.content || undefined;
   }
 
   input_type(key: string) {

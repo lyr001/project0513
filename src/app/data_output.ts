@@ -10,15 +10,24 @@ export class DataOutput {
   lmf: Lmf;
   imageCT: ImageCT;
 
-  constructor() {
-    this.ascii = new Ascii();
-    this.root = new Root();
-    this.interfile = new Interfile();
-    this.sinogram = new Sinogram();
-    this.sinoaccel = new Sinogram();
-    this.ecat7 = new Ecat7();
-    this.lmf = new Lmf();
-    this.imageCT = new ImageCT();
+  constructor(options: {
+    ascii?: Ascii,
+    root?: Root,
+    interfile?: Interfile,
+    sinogram?: Sinogram,
+    sinoaccel?: Sinogram,
+    ecat7?: Ecat7,
+    lmf?: Lmf,
+    imageCT?: ImageCT
+  } = {}) {
+    this.ascii = options.ascii || new Ascii();
+    this.root = options.root || new Root();
+    this.interfile = options.interfile || new Interfile();
+    this.sinogram = options.sinogram || new Sinogram();
+    this.sinoaccel = options.sinoaccel || new Sinogram();
+    this.ecat7 = options.ecat7 || new Ecat7();
+    this.lmf = options.lmf || new Lmf();
+    this.imageCT = options.imageCT || new ImageCT();
   }
 
   input_type(key: string) {
@@ -45,15 +54,24 @@ export class Ascii {
   single_mask: [boolean, boolean, boolean, boolean];
   out_file_size_limit: number;
 
-  constructor() {
-    this.enable = false;
-    this.file_name = '';
-    this.out_file_hits_flag = false;
-    this.out_file_singles_flag = false;
-    this.out_file_coincidences_flag = false;
-    this.coincidence_mask = [false, false, false, false, false, false];
-    this.single_mask = [false, false, false, false];
-    this.out_file_size_limit = null;
+  constructor(options: {
+    enable?: boolean,
+    file_name?: string,
+    out_file_hits_flag?: boolean,
+    out_file_singles_flag?: boolean,
+    out_file_coincidences_flag?: boolean,
+    coincidence_mask?: [boolean, boolean, boolean, boolean, boolean, boolean],
+    single_mask?: [boolean, boolean, boolean, boolean],
+    out_file_size_limit?: number
+  } = {}) {
+    this.enable = options.enable || false;
+    this.file_name = options.file_name || '';
+    this.out_file_hits_flag = options.out_file_hits_flag || false;
+    this.out_file_singles_flag = options.out_file_singles_flag || false;
+    this.out_file_coincidences_flag = options.out_file_coincidences_flag || false;
+    this.coincidence_mask = options.coincidence_mask || [false, false, false, false, false, false];
+    this.single_mask = options.single_mask || [false, false, false, false];
+    this.out_file_size_limit = options.out_file_size_limit || null;
   }
 
   input_type(key: string) {
@@ -84,19 +102,32 @@ export class Root {
   out_file_singles_thresholder_flag: boolean;
   out_file_singles_upholder_flag: boolean;
 
-  constructor() {
-    this.enable = false;
-    this.file_name = '';
-    this.root_hit_flag = false;
-    this.root_singles_flag = false;
-    this.root_coincidences_flag = false;
-    this.root_ntuple_flag = false;
-    this.out_file_singles_adder_flag = false;
-    this.out_file_singles_readout_flag = false;
-    this.out_file_singles_spblurring_flag = false;
-    this.out_file_singles_blurring_flag = false;
-    this.out_file_singles_thresholder_flag = false;
-    this.out_file_singles_upholder_flag = false;
+  constructor(options: {
+    enable?: boolean,
+    file_name?: string,
+    root_hit_flag?: boolean,
+    root_singles_flag?: boolean,
+    root_coincidences_flag?: boolean,
+    root_ntuple_flag?: boolean,
+    out_file_singles_adder_flag?: boolean,
+    out_file_singles_readout_flag?: boolean,
+    out_file_singles_spblurring_flag?: boolean,
+    out_file_singles_blurring_flag?: boolean,
+    out_file_singles_thresholder_flag?: boolean,
+    out_file_singles_upholder_flag?: boolean
+  } = {}) {
+    this.enable = options.enable || false;
+    this.file_name = options.file_name || '';
+    this.root_hit_flag = options.root_hit_flag || false;
+    this.root_singles_flag = options.root_singles_flag || false;
+    this.root_coincidences_flag = options.root_coincidences_flag || false;
+    this.root_ntuple_flag = options.root_ntuple_flag || false;
+    this.out_file_singles_adder_flag = options.out_file_singles_adder_flag || false;
+    this.out_file_singles_readout_flag = options.out_file_singles_readout_flag || false;
+    this.out_file_singles_spblurring_flag = options.out_file_singles_spblurring_flag || false;
+    this.out_file_singles_blurring_flag = options.out_file_singles_blurring_flag || false;
+    this.out_file_singles_thresholder_flag = options.out_file_singles_thresholder_flag || false;
+    this.out_file_singles_upholder_flag = options.out_file_singles_upholder_flag || false;
   }
 
   input_type(key: string) {
@@ -124,12 +155,18 @@ export class Interfile {
   pixel_size: [Value, Value];
   pixel_number: [number, number];
 
-  constructor() {
-    this.enable = false;
-    this.file_name = '';
-    this.projection_plane = '';
-    this.pixel_size = [new Value(), new Value()];
-    this.pixel_number = [null, null];
+  constructor(options: {
+    enable?: boolean,
+    file_name?: string,
+    projection_plane?: string,
+    pixel_size?: [Value, Value],
+    pixel_number?: [number, number]
+  } = {}) {
+    this.enable = options.enable || false;
+    this.file_name = options.file_name || '';
+    this.projection_plane = options.projection_plane || '';
+    this.pixel_size = options.pixel_size || [new Value(), new Value()];
+    this.pixel_number = options.pixel_number || [null, null];
   }
 
   input_type(key: string) {
@@ -150,12 +187,18 @@ export class Sinogram {
   trues_only: boolean;
   raw_output_enable: boolean;
 
-  constructor() {
-    this.enable = false;
-    this.file_name = '';
-    this.radial_bins = null;
-    this.trues_only = false;
-    this.raw_output_enable = false;
+  constructor(options: {
+    enable?: boolean,
+    file_name?: string,
+    radial_bins?: number,
+    trues_only?: boolean,
+    raw_output_enable?: boolean
+  } = {}) {
+    this.enable = options.enable || false;
+    this.file_name = options.file_name || '';
+    this.radial_bins = options.radial_bins || null;
+    this.trues_only = options.trues_only || false;
+    this.raw_output_enable = options.raw_output_enable || false;
   }
 
   input_type(key: string) {
@@ -177,13 +220,20 @@ export class Ecat7 {
   mashing: number;
   system: number;
 
-  constructor() {
-    this.enable = false;
-    this.file_name = '';
-    this.maxringdiff = null;
-    this.span = null;
-    this.mashing = null;
-    this.system = null;
+  constructor(options: {
+    enable?: boolean,
+    file_name?: string,
+    maxringdiff?: number,
+    span?: number,
+    mashing?: number,
+    system?: number
+  } = {}) {
+    this.enable = options.enable || false;
+    this.file_name = options.file_name || '';
+    this.maxringdiff = options.maxringdiff || null;
+    this.span = options.span || null;
+    this.mashing = options.mashing || null;
+    this.system = options.system || null;
   }
 
   input_type(key: string) {
@@ -218,25 +268,44 @@ export class Lmf {
   event_id_bool: boolean;
   run_id_bool: boolean;
 
-  constructor() {
-    this.enable = false;
-    this.file_name = '';
-    this.detector_id_bool = false;
-    this.energy_bool = false;
-    this.gantry_axial_pos_bool = false;
-    this.gantry_angular_pos_bool = false;
-    this.source_pos_bool = false;
-    this.neighbour_bool = false;
-    this.neighbourhood_order = false;
-    this.coincidence_bool = false;
-    this.gate_digi_bool = false;
-    this.compton_bool = false;
-    this.compton_detector_bool = false;
-    this.source_id_bool = false;
-    this.source_xyzpos_bool = false;
-    this.global_xyzpos_bool = false;
-    this.event_id_bool = false;
-    this.run_id_bool = false;
+  constructor(options: {
+    enable?: boolean,
+    file_name?: string,
+    detector_id_bool?: boolean,
+    energy_bool?: boolean,
+    gantry_axial_pos_bool?: boolean,
+    gantry_angular_pos_bool?: boolean,
+    source_pos_bool?: boolean,
+    neighbour_bool?: boolean,
+    neighbourhood_order?: boolean,
+    coincidence_bool?: boolean,
+    gate_digi_bool?: boolean,
+    compton_bool?: boolean,
+    compton_detector_bool?: boolean,
+    source_id_bool?: boolean,
+    source_xyzpos_bool?: boolean,
+    global_xyzpos_bool?: boolean,
+    event_id_bool?: boolean,
+    run_id_bool?: boolean
+  } = {}) {
+    this.enable = options.enable || false;
+    this.file_name = options.file_name || '';
+    this.detector_id_bool = options.detector_id_bool || false;
+    this.energy_bool = options.energy_bool || false;
+    this.gantry_axial_pos_bool = options.gantry_axial_pos_bool || false;
+    this.gantry_angular_pos_bool = options.gantry_angular_pos_bool || false;
+    this.source_pos_bool = options.source_pos_bool || false;
+    this.neighbour_bool = options.neighbour_bool || false;
+    this.neighbourhood_order = options.neighbourhood_order || false;
+    this.coincidence_bool = options.coincidence_bool || false;
+    this.gate_digi_bool = options.gate_digi_bool || false;
+    this.compton_bool = options.compton_bool || false;
+    this.compton_detector_bool = options.compton_detector_bool || false;
+    this.source_id_bool = options.source_id_bool || false;
+    this.source_xyzpos_bool = options.source_xyzpos_bool || false;
+    this.global_xyzpos_bool = options.global_xyzpos_bool || false;
+    this.event_id_bool = options.event_id_bool || false;
+    this.run_id_bool = options.run_id_bool || false;
   }
 
   input_type(key: string) {
@@ -270,12 +339,18 @@ export class ImageCT {
   vrt_factor: number;
   start_seed: number;
 
-  constructor() {
-    this.enable = false;
-    this.file_name = '';
-    this.num_pixel = [null, null];
-    this.vrt_factor = null;
-    this.start_seed = null;
+  constructor(options: {
+    enable?: boolean,
+    file_name?: string,
+    num_pixel?: [number, number],
+    vrt_factor?: number,
+    start_seed?: number
+  } = {}) {
+    this.enable = options.enable || false;
+    this.file_name = options.file_name || '';
+    this.num_pixel = options.num_pixel || [null, null];
+    this.vrt_factor = options.vrt_factor || null;
+    this.start_seed = options.start_seed || null;
   }
 
   input_type(key: string) {

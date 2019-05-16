@@ -16,7 +16,7 @@ export class AppComponent implements AfterContentInit {
   readonly downWithButton$ = fromEvent<MouseEvent>(
     this.ef.nativeElement,
     'mousedown',
-  )
+  );
   // .subscribe(e => console.log(e), console.error);
   constructor(private render: Renderer2, private ef: ElementRef) {
 

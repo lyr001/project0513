@@ -5,10 +5,14 @@ export class Geometry {
   scanner: SystemSub;
   phantom: PhantomSub;
 
-  constructor() {
-    this.world = new Volume();
-    this.scanner = new SystemSub();
-    this.phantom = new PhantomSub();
+  constructor(options: {
+    world?: Volume,
+    scanner?: SystemSub,
+    phantom?: PhantomSub
+  } = {}) {
+    this.world = options.world || new Volume();
+    this.scanner = options.scanner || new SystemSub();
+    this.phantom = options.phantom || new PhantomSub();
   }
 
   input_type(key: string) {
@@ -20,13 +24,16 @@ export class Geometry {
   }
 }
 /////////////////////////////////////////////////////////////////////////////////////
-export class PhantomSub {
+export class SystemSub {
   type: string;
   content: System;
 
-  constructor() {
-    this.type = 'undefined';
-    this.content = undefined;
+  constructor(options: {
+    type?: string,
+    content?: System
+  } = {}) {
+    this.type = options.type || 'undefined';
+    this.content = options.content || undefined;
   }
 
   input_type(key: string) {
@@ -52,13 +59,16 @@ export class PhantomSub {
   }
 }
 /////////////////////////////////////////////////////////////////////////////////////
-export class SystemSub {
+export class PhantomSub {
   type: string;
   content: Volume | VoxelizedPhantom;
 
-  constructor() {
-    this.type = 'undefined';
-    this.content = undefined;
+  constructor(options: {
+    type?: string,
+    content?: Volume | VoxelizedPhantom
+  } = {}) {
+    this.type = options.type || 'undefined';
+    this.content = options.content || undefined;
   }
 
   input_type(key: string) {
@@ -80,8 +90,10 @@ export class SystemSub {
 export class System {
   base: Volume;
 
-  constructor() {
-    this.base = new Volume();
+  constructor(options: {
+    base?: Volume
+  } = {}) {
+    this.base = options.base || new Volume();
   }
 }
 
@@ -92,13 +104,20 @@ export class Scanner extends System {
   level4: Volume;
   level5: Volume;
 
-  constructor() {
-    super();
-    this.level1 = new Volume();
-    this.level2 = new Volume();
-    this.level3 = new Volume();
-    this.level4 = new Volume();
-    this.level5 = new Volume();
+  constructor(options: {
+    base?: Volume,
+    level1?: Volume,
+    level2?: Volume,
+    level3?: Volume,
+    level4?: Volume,
+    level5?: Volume
+  } = {}) {
+    super({base: options.base});
+    this.level1 = options.level1 || new Volume();
+    this.level2 = options.level2 || new Volume();
+    this.level3 = options.level3 || new Volume();
+    this.level4 = options.level4 || new Volume();
+    this.level5 = options.level5 || new Volume();
   }
 
   input_type(key: string) {
@@ -118,11 +137,16 @@ export class CTscanner extends System {
   cluster: VariableArr;         // max3
   pixel: VariableArr;           // max3
 
-  constructor() {
-    super();
-    this.module = new Volume();
-    this.cluster = new VariableArr('Volume');
-    this.pixel = new VariableArr('number');
+  constructor(options: {
+    base?: Volume,
+    module?: Volume,
+    cluster?: VariableArr,
+    pixel?: VariableArr
+  } = {}) {
+    super({base: options.base});
+    this.module = options.module || new Volume();
+    this.cluster = options.cluster || new VariableArr('Volume');
+    this.pixel = options.pixel || new VariableArr('number');
   }
 
   input_type(key: string) {
@@ -142,13 +166,20 @@ export class CylindricalPET extends System {
   crystal: Volume;
   layer: VariableArr;           // max4
 
-  constructor() {
-    super();
-    this.rsector = new Volume();
-    this.module = new Volume();
-    this.submodule = new Volume();
-    this.crystal = new Volume();
-    this.layer = new VariableArr('Volume');
+  constructor(options: {
+    base?: Volume,
+    rsector?: Volume,
+    module?: Volume,
+    submodule?: Volume,
+    crystal?: Volume,
+    layer?: VariableArr
+  } = {}) {
+    super({base: options.base});
+    this.rsector = options.rsector || new Volume();
+    this.module = options.module || new Volume();
+    this.submodule = options.submodule || new Volume();
+    this.crystal = options.crystal || new Volume();
+    this.layer = options.layer || new VariableArr('Volume');
   }
 
   input_type(key: string) {
@@ -170,13 +201,20 @@ export class CPET extends System {
   crystal: Volume;
   layer: VariableArr;          // max4
 
-  constructor() {
-    super();
-    this.sector = new Volume();
-    this.cassette = new Volume();
-    this.module = new Volume();
-    this.crystal = new Volume();
-    this.layer = new VariableArr('Volume');
+  constructor(options: {
+    base?: Volume,
+    sector?: Volume,
+    cassette?: Volume,
+    module?: Volume,
+    crystal?: Volume,
+    layer?: VariableArr
+  } = {}) {
+    super({base: options.base});
+    this.sector = options.sector || new Volume();
+    this.cassette = options.cassette || new Volume();
+    this.module = options.module || new Volume();
+    this.crystal = options.crystal || new Volume();
+    this.layer = options.layer || new VariableArr('Volume');
   }
 
   input_type(key: string) {
@@ -195,10 +233,14 @@ export class ECAT extends System {
   block: Volume;
   crystal: Volume;
 
-  constructor() {
-    super();
-    this.block = new Volume();
-    this.crystal = new Volume();
+  constructor(options: {
+    base?: Volume,
+    block?: Volume,
+    crystal?: Volume
+  } = {}) {
+    super({base: options.base});
+    this.block = options.block || new Volume();
+    this.crystal = options.crystal || new Volume();
   }
 
   input_type(key: string) {
@@ -214,10 +256,14 @@ export class ECATAccel extends System {
   block: Volume;
   crystal: Volume;
 
-  constructor() {
-    super();
-    this.block = new Volume();
-    this.crystal = new Volume();
+  constructor(options: {
+    base?: Volume,
+    block?: Volume,
+    crystal?: Volume
+  } = {}) {
+    super({base: options.base});
+    this.block = options.block || new Volume();
+    this.crystal = options.crystal || new Volume();
   }
 
   input_type(key: string) {
@@ -236,13 +282,20 @@ export class OPET extends System {
   crystal: Volume;
   layer: VariableArr;            // max8
 
-  constructor() {
-    super();
-    this.rsector = new Volume();
-    this.module = new Volume();
-    this.submodule = new Volume();
-    this.crystal = new Volume();
-    this.layer = new VariableArr('Volume');
+  constructor(options: {
+    base?: Volume,
+    rsector?: Volume,
+    module?: Volume,
+    submodule?: Volume,
+    crystal?: Volume,
+    layer?: VariableArr
+  } = {}) {
+    super({base: options.base});
+    this.rsector = options.rsector || new Volume();
+    this.module = options.module || new Volume();
+    this.submodule = options.submodule || new Volume();
+    this.crystal = options.crystal || new Volume();
+    this.layer = options.layer || new VariableArr('Volume');
   }
 
   input_type(key: string) {
@@ -261,10 +314,14 @@ export class SPECThead extends System {
   crystal: Volume;
   pixel: Volume;
 
-  constructor() {
-    super();
-    this.crystal = new Volume();
-    this.pixel = new Volume();
+  constructor(options: {
+    base?: Volume,
+    crystal?: Volume,
+    pixel?: Volume
+  } = {}) {
+    super({base: options.base});
+    this.crystal = options.crystal || new Volume();
+    this.pixel = options.pixel || new Volume();
   }
 
   input_type(key: string) {
