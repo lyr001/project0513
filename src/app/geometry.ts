@@ -10,7 +10,7 @@ export class Geometry {
     scanner?: SystemSub,
     phantom?: PhantomSub
   } = {}) {
-    this.world = options.world || new Volume();
+    this.world = options.world || new Volume({name: 'world'});
     this.scanner = options.scanner || new SystemSub();
     this.phantom = options.phantom || new PhantomSub();
   }

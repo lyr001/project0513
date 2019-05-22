@@ -367,7 +367,7 @@ export class LinearRepeater {
   } = {}) {
     this.repeat_number = options.repeat_number || null;
     this.repeat_vector = options.repeat_vector || new Vec3();
-    this.auto_center = options.auto_center || false;
+    this.auto_center = options.auto_center || true;
     this.target = options.target || new VariableArr('RepeatObject');
   }
 
@@ -404,14 +404,21 @@ export class RingRepeater {
     target?: VariableArr
   } = {}) {
     this.repeat_number = options.repeat_number || null;
-    this.point1 = options.point1 || new Vec3();
-    this.point2 = options.point2 || new Vec3();
-    this.first_angle = options.first_angle || new Value();
-    this.angular_span = options.angular_span || new Value();
-    this.modulo_number = options.modulo_number || null;
+    this.point1 = options.point1 || new Vec3({value: [0, 0, 1], unit: 'cm'});
+    this.point2 = options.point2 || new Vec3({value: [0, 0, 0], unit: 'cm'});
+    this.first_angle = options.first_angle || new Value({num: 0, unit: 'deg'});
+    this.angular_span = options.angular_span || new Value({num: 360, unit: 'deg'});
+    this.modulo_number = options.modulo_number || 1;
     this.z_shift = options.z_shift ||
-      [new Value(), new Value(), new Value(), new Value(), new Value(), new Value(), new Value(), new Value()];
-    this.auto_rotation = options.auto_rotation || false;
+      [new Value({num: 0, unit: 'cm'}),
+        new Value({num: 0, unit: 'cm'}),
+        new Value({num: 0, unit: 'cm'}),
+        new Value({num: 0, unit: 'cm'}),
+        new Value({num: 0, unit: 'cm'}),
+        new Value({num: 0, unit: 'cm'}),
+        new Value({num: 0, unit: 'cm'}),
+        new Value({num: 0, unit: 'cm'})];
+    this.auto_rotation = options.auto_rotation || true;
     this.target = options.target || new VariableArr('RepeatObject');
   }
 
@@ -469,7 +476,7 @@ export class QuadrantRepeater {
     target?: VariableArr
   } = {}) {
     this.line_number = options.line_number || null;
-    this.orientation = options.orientation || new Value();
+    this.orientation = options.orientation || new Value({num: 0, unit: 'deg'});
     this.copy_spacing = options.copy_spacing || new Value();
     this.max_range = options.max_range || new Value();
     this.target = options.target || new VariableArr('RepeatObject');

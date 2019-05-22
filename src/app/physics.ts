@@ -16,23 +16,23 @@ import {CubicArrayRepeater, GenericRepeater, LinearRepeater, QuadrantRepeater, R
 
 export class Physics {
   physics_list: string;
-  cut_in_world: CutInRegion;
-  cut_in_patient: CutInRegion;
+  cut_in_region: VariableArr;
+  // cut_in_patient: CutInRegion;
   activate_step_limiter: string;
   process: VariableArr;
   mag_field: Vec3;
 
   constructor(options: {
     physics_list?: string,
-    cut_in_world?: CutInRegion,
-    cut_in_patient?: CutInRegion,
+    cut_in_region?: VariableArr, // CutInRegion,
+    // cut_in_patient?: CutInRegion,
     activate_step_limiter?: string,
     process?: VariableArr,
     mag_field?: Vec3
   } = {}) {
     this.physics_list = options.physics_list || '';
-    this.cut_in_world = options.cut_in_world || new CutInRegion();
-    this.cut_in_patient = options.cut_in_patient || new CutInRegion();
+    this.cut_in_region = options.cut_in_region || new VariableArr('C');
+    // this.cut_in_patient = options.cut_in_patient || new CutInRegion();
     this.activate_step_limiter = options.activate_step_limiter || '';
     this.process = options.process || new VariableArr('Process');
     this.mag_field = options.mag_field || new Vec3();
@@ -41,8 +41,8 @@ export class Physics {
   input_type(key: string) {
     switch (key) {
       case 'physics_list': return 'string'; break;
-      case 'cut_in_world': return 'CutInRegion'; break;
-      case 'cut_in_patient': return 'CutInRegion'; break;
+      case 'cut_in_region': return 'VariableArr'; break;
+      // case 'cut_in_patient': return 'CutInRegion'; break;
       case 'activate_step_limiter': return 'string'; break;
       case 'process': return 'VariableArr'; break;
       case 'mag_field': return 'Vec3'; break;
@@ -51,6 +51,7 @@ export class Physics {
 }
 /////////////////////////////////////////////////////////////////////////////
 export class CutInRegion {
+  region: string;
   gamma: Value;
   electron: Value;
   positron: Value;
@@ -58,12 +59,14 @@ export class CutInRegion {
   max_step: Value;
 
   constructor(options: {
+    region?: string,
     gamma?: Value,
     electron?: Value,
     positron?: Value,
     proton?: Value,
     max_step?: Value
   } = {}) {
+    this.region = options.region || '';
     this.gamma = options.gamma || new Value();
     this.electron = options.electron || new Value();
     this.positron = options.positron || new Value();
@@ -73,6 +76,7 @@ export class CutInRegion {
 
   input_type(key: string) {
     switch (key) {
+      case 'region': return 'string'; break;
       case 'gamma': return 'Value'; break;
       case 'electron': return 'Value'; break;
       case 'positron': return 'Value'; break;
@@ -86,18 +90,18 @@ export class Process {
   add: boolean;
   process_name: string;
   particle: string;
-  model: Model;
+  model: VariableArr; // Model;
 
   constructor(options: {
     add?: boolean,
     process_name?: string,
     particle?: string,
-    model?: Model
+    model?: VariableArr
   } = {}) {
-    this.add = options.add || false;
+    this.add = options.add || true;
     this.process_name = options.process_name || '';
     this.particle = options.particle || '';
-    this.model = options.model || new Model();
+    this.model = options.model || new VariableArr('Model');
   }
 
   input_type(key: string) {
@@ -105,7 +109,7 @@ export class Process {
       case 'add': return 'boolean'; break;
       case 'process_name': return 'string'; break;
       case 'particle': return 'string'; break;
-      case 'model': return 'Model'; break;
+      case 'model': return 'VariableArr'; break;
     }
   }
 }
@@ -126,7 +130,7 @@ export class Model {
     e_max?: SetE,
     e_min?: SetE
   } = {}) {
-    this.set = options.set || false;
+    this.set = options.set || true;
     this.model_name = options.model_name || '';
     this.particle = options.particle || '';
     this.energy_range = options.energy_range || false;
@@ -435,7 +439,8 @@ export class Digitizer {
   pileup: Pileup;
   deadtime: DeadTime;
   coincidences: Coincidences;
-  coincidence_sorter: CoincidenceSorter;
+  coincidence_sorter: VariableArr;
+  coincidence_chain: VariableArr;
 
   constructor(options: {
     adder?: Adder,
@@ -454,7 +459,8 @@ export class Digitizer {
     pileup?: Pileup,
     deadtime?: DeadTime,
     coincidences?: Coincidences,
-    coincidence_sorter?: CoincidenceSorter
+    coincidence_sorter?: VariableArr,
+    coincidence_chain?: VariableArr
   } = {}) {
     this.adder = options.adder || new Adder();
     this.readout = options.readout || new Readout();
@@ -472,7 +478,8 @@ export class Digitizer {
     this.pileup = options.pileup || new Pileup();
     this.deadtime = options.deadtime || new DeadTime();
     this.coincidences = options.coincidences || new Coincidences();
-    this.coincidence_sorter = options.coincidence_sorter || new CoincidenceSorter();
+    this.coincidence_sorter = options.coincidence_sorter || new VariableArr('CoincidenceSorter');
+    this.coincidence_chain = options.coincidence_chain || new VariableArr('CoincidenceChain');
   }
 
   input_type(key: string) {
@@ -493,7 +500,8 @@ export class Digitizer {
       case 'pileup': return 'Pileup'; break;
       case 'deadtime': return 'DeadTime'; break;
       case 'coincidences': return 'Coincidences'; break;
-      case 'coincidence_sorter': return 'CoincidenceSorter'; break;
+      case 'coincidence_sorter': return 'VariableArr'; break;
+      case 'coincidence_chain': return 'VariableArr'; break;
     }
   }
 }
@@ -544,6 +552,8 @@ export class Readout {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 export class Blurring {
   insert: boolean;
+  resolution: number;
+  energy_of_reference: Value;
   law: BlurringLawSub;
   crystal_blurring: CrystalBlurring;
   local_blurring: VariableArr;
@@ -555,6 +565,8 @@ export class Blurring {
 
   constructor(options: {
     insert?: boolean,
+    resolution?: number,
+    energy_of_reference?: Value,
     law?: BlurringLawSub,
     crystal_blurring?: CrystalBlurring,
     local_blurring?: VariableArr,
@@ -565,6 +577,8 @@ export class Blurring {
     spblurring?: Spblurring
   } = {}) {
     this.insert = options.insert || false;
+    this.resolution = options.resolution || null;
+    this.energy_of_reference = options.energy_of_reference || new Value();
     this.law = options.law || new BlurringLawSub();
     this.crystal_blurring = options.crystal_blurring || new CrystalBlurring();
     this.local_blurring = options.local_blurring || new VariableArr('LocalBlurring');
@@ -579,6 +593,12 @@ export class Blurring {
     switch (key) {
       case 'insert':
         return 'boolean';
+        break;
+      case 'resolution':
+        return 'number';
+        break;
+      case 'energy_of_reference':
+        return 'Value';
         break;
       case 'law':
         return 'BlurringLawSub';
@@ -1227,7 +1247,7 @@ export class Coincidences {
     this.offset = options.offset || new Value();
     this.depth = options.depth || null;
     this.all_pulse_open_coinc_gate = options.all_pulse_open_coinc_gate || false;
-    this.multiple_policy = options.multiple_policy || '';
+    this.multiple_policy = options.multiple_policy || 'keepIfAllAreGoods';
   }
 
   input_type(key: string) {
@@ -1247,17 +1267,20 @@ export class CoincidenceSorter {
   name: string;
   input_name: string;
   window: Value;
+  offset: Value;
 
   constructor(options: {
     insert?: boolean,
     name?: string,
     input_name?: string,
-    window?: Value
+    window?: Value,
+    offset?: Value
   } = {}) {
     this.insert = options.insert || false;
     this.name = options.name || '';
     this.input_name = options.input_name || '';
     this.window = options.window || new Value();
+    this.offset = options.offset || new Value();
   }
 
   input_type(key: string) {
@@ -1266,6 +1289,129 @@ export class CoincidenceSorter {
       case 'name': return 'string'; break;
       case 'input_name': return 'string'; break;
       case 'window': return 'Value'; break;
+      case 'offset': return 'Value'; break;
     }
   }
 }
+/////////////////////////////////////////////////////////////////////////////////////////////////
+export class CoincidenceChain {
+  insert: boolean;
+  name: string;
+  input_name: VariableArr;
+  source: VariableArr;
+  use_priority: boolean;
+  deadtime_allevent: boolean;
+  module: VariableArr;
+
+  constructor(options: {
+    insert?: boolean,
+    name?: string,
+    input_name?: VariableArr,
+    source?: VariableArr,
+    use_priority?: boolean,
+    deadtime_allevent?: boolean,
+    module?: VariableArr
+  } = {}) {
+    this.insert = options.insert || false;
+    this.name = options.name || '';
+    this.input_name = options.input_name || new VariableArr('string');
+    this.source = options.source || new VariableArr('string');
+    this.use_priority = options.use_priority || false;
+    this.deadtime_allevent = options.deadtime_allevent || false;
+    this.module = options.module || new VariableArr('ModuleSub');
+  }
+
+  input_type(key: string) {
+    switch (key) {
+      case 'insert': return 'boolean'; break;
+      case 'name': return 'string'; break;
+      case 'input_name': return 'VariableArr'; break;
+      case 'source': return 'VariableArr'; break;
+      case 'use_priority': return 'boolean'; break;
+      case 'deadtime_allevent': return 'boolean'; break;
+      case 'module': return 'VariableArr'; break;
+    }
+  }
+}
+/////////////////////////////////////////////////////////////////////////////////////////////////
+export class ModuleSub {
+  type: string;
+  content: Adder | Readout | Blurring | Calibration | Crosstalk | Thresholder | Upholder | Window
+    | SigmoidalThresholder | TimeResolution | Noise | LocalEfficiency | Buffer | Pileup | DeadTime | string;
+
+  constructor(options: {
+    type?: string;
+    content?: Adder | Readout | Blurring | Calibration | Crosstalk | Thresholder | Upholder | Window
+      | SigmoidalThresholder | TimeResolution | Noise | LocalEfficiency | Buffer | Pileup | DeadTime | string;
+  } = {}) {
+    this.type = options.type || 'undefined';
+    this.content = options.content || undefined;
+  }
+
+  input_type(key: string) {
+    switch (key) {
+      case 'type':
+        return {
+          type: this.type, subclass: ['Adder', 'Readout', 'Blurring', 'Calibration',
+            'Crosstalk', 'Thresholder', 'Upholder', 'Window', 'SigmoidalThresholder', 'TimeResolution',
+            'Noise', 'LocalEfficiency', 'Buffer', 'Pileup', 'DeadTime', 'string']
+        };
+        break;
+      case 'content':
+        switch (this.type) {
+          case 'Adder':
+            return 'Adder';
+            break;
+          case 'Readout':
+            return 'Readout';
+            break;
+          case 'Blurring':
+            return 'Blurring';
+            break;
+          case 'Calibration':
+            return 'Calibration';
+            break;
+          case 'Crosstalk':
+            return 'Crosstalk';
+            break;
+          case 'Thresholder':
+            return 'Thresholder';
+            break;
+          case 'Upholder':
+            return 'Upholder';
+            break;
+          case 'Window':
+            return 'Window';
+            break;
+          case 'SigmoidalThresholder':
+            return 'SigmoidalThresholder';
+            break;
+          case 'TimeResolution':
+            return 'TimeResolution';
+            break;
+          case 'Noise':
+            return 'Noise';
+            break;
+          case 'LocalEfficiency':
+            return 'LocalEfficiency';
+            break;
+          case 'Buffer':
+            return 'Buffer';
+            break;
+          case 'Pileup':
+            return 'Pileup';
+            break;
+          case 'DeadTime':
+            return 'DeadTime';
+            break;
+          case 'string':
+            return 'string';
+            break;
+          default:
+            return 'undefined';
+        }
+        break;
+    }
+  }
+}
+

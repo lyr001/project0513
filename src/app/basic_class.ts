@@ -11,9 +11,11 @@ import {
   PlacementTranslation, QuadrantRepeater, RepeatObject, RingRepeater, SphereRepeater
 } from './act';
 import {
+  CoincidenceSorter,
+  CutInRegion,
   IntrinsicResolutionBlurring,
   LightYield,
-  LocalBlurring,
+  LocalBlurring, Model, ModuleSub,
   Process,
   QuantumEfficiency,
   SetDatasetObject,
@@ -25,6 +27,7 @@ export class Volume {
   shape: ShapeSub;
   material: string;
   attach: string;
+  attach_crystal: string;
   appearance: Appearance;
 
   constructor(options: {
@@ -32,12 +35,14 @@ export class Volume {
     shape?: ShapeSub,
     material?: string,
     attach?: string,
+    attach_crystal?: string,
     appearance?: Appearance
   } = {}) {
     this.name = options.name || '';
     this.shape = options.shape || new ShapeSub();
     this.material = options.material || '';
     this.attach = options.attach || '';
+    this.attach_crystal = options.attach_crystal || '';
     this.appearance = options.appearance || new Appearance();
   }
 
@@ -47,6 +52,7 @@ export class Volume {
       case 'shape': return 'ShapeSub'; break;
       case 'material': return 'string'; break;
       case 'attach': return 'string'; break;
+      case 'attach_crystal': return 'string'; break;
       case 'appearance': return 'Appearance'; break;
     }
   }
@@ -60,6 +66,7 @@ export class VoxelizedPhantom {
   range_to_material_file: string;
   hu_to_material_file: string;
   attach: string;
+  attach_crystal: string;
   skip_equal_materials: boolean;
   material_table: string;
   density_table: string;
@@ -77,6 +84,7 @@ export class VoxelizedPhantom {
     range_to_material_file?: string,
     hu_to_material_file?: string,
     attach?: string,
+    attach_crystal?: string,
     skip_equal_materials?: boolean,
     material_table?: string,
     density_table?: string,
@@ -93,6 +101,7 @@ export class VoxelizedPhantom {
     this.range_to_material_file = options.range_to_material_file || '';
     this.hu_to_material_file = options.hu_to_material_file || '';
     this.attach = options.attach || '';
+    this.attach_crystal = options.attach_crystal || '';
     this.skip_equal_materials = options.skip_equal_materials || false;
     this.material_table = options.material_table || '';
     this.density_table = options.density_table || '';
@@ -112,6 +121,7 @@ export class VoxelizedPhantom {
       case 'range_to_material_file': return 'string'; break;
       case 'hu_to_material_file': return 'string'; break;
       case 'attach': return 'string'; break;
+      case 'attach_crystal': return 'string'; break;
       case 'skip_equal_materials': return 'boolean'; break;
       case 'material_table': return 'string'; break;
       case 'density_table': return 'string'; break;
@@ -194,13 +204,13 @@ export class Appearance {
     force_solid?: boolean,
     force_wireframe?: boolean
   } = {}) {
-    this.color = options.color || '';
-    this.visible = options.visible || false;
+    this.color = options.color || 'white';
+    this.visible = options.visible || true;
     this.daughters_invisible = options.daughters_invisible || false;
     this.line_style = options.line_style || '';
-    this.line_width = options.line_width || null;
+    this.line_width = options.line_width || 1;
     this.force_solid = options.force_solid || false;
-    this.force_wireframe = options.force_wireframe || false;
+    this.force_wireframe = options.force_wireframe || true;
   }
 
   input_type(key: string) {
@@ -256,10 +266,10 @@ export class Sphere extends Shape {
     super();
     this.rmin = options.rmin || new Value();
     this.rmax = options.rmax || new Value();
-    this.phi_start = options.phi_start || new Value();
-    this.delta_phi = options.delta_phi || new Value();
-    this.theta_start = options.theta_start || new Value();
-    this.delta_theta = options.delta_theta || new Value();
+    this.phi_start = options.phi_start || new Value({num: 0, unit: 'rad'});
+    this.delta_phi = options.delta_phi || new Value({num: 360, unit: 'deg'});
+    this.theta_start = options.theta_start || new Value({num: 0, unit: 'rad'});
+    this.delta_theta = options.delta_theta || new Value({num: 360, unit: 'deg'});
   }
 
   input_type(key: string) {
@@ -292,8 +302,8 @@ export class Cylinder extends Shape {
     this.rmin = options.rmin || new Value();
     this.rmax = options.rmax || new Value();
     this.height = options.height || new Value();
-    this.phi_start = options.phi_start || new Value();
-    this.delta_phi = options.delta_phi || new Value();
+    this.phi_start = options.phi_start || new Value({num: 0, unit: 'deg'});
+    this.delta_phi = options.delta_phi || new Value({num: 360, unit: 'deg'});
   }
 
   input_type(key: string) {
@@ -331,8 +341,8 @@ export class Cone extends Shape {
     this.rmin2 = options.rmin2 || new Value();
     this.rmax2 = options.rmax2 || new Value();
     this.height = options.height || new Value();
-    this.phi_start = options.phi_start || new Value();
-    this.delta_phi = options.delta_phi || new Value();
+    this.phi_start = options.phi_start || new Value({num: 0, unit: 'deg'});
+    this.delta_phi = options.delta_phi || new Value({num: 360, unit: 'deg'});
   }
 
   input_type(key: string) {
@@ -465,7 +475,7 @@ export class TRPD extends Shape {
     this.y2 = options.y2 || new Value();
     this.z = options.z || new Value();
     this.box_size = options.box_size || new Vec3();
-    this.box_pos = options.box_pos || new Vec3();
+    this.box_pos = options.box_pos || new Vec3({value: [0, 0, 0], unit: 'cm'});
   }
 
   input_type(key: string) {
@@ -580,28 +590,32 @@ export class VariableArr {
       case 'Value': this.value.push(new Value()); break;
       case 'PlacementTranslation': this.value.push(new PlacementTranslation()); break;
       case 'PlacementRotation': this.value.push(new PlacementRotation()); break;
-      case'PlacementObject': this.value.push(new PlacementObject()); break;
+      case 'PlacementObject': this.value.push(new PlacementObject()); break;
       case 'MoveTranslation': this.value.push(new MoveTranslation()); break;
       case 'MoveRotation': this.value.push(new MoveRotation()); break;
-      case'MoveOrbiting': this.value.push(new MoveOrbiting()); break;
+      case 'MoveOrbiting': this.value.push(new MoveOrbiting()); break;
       case 'MoveOscTrans': this.value.push(new MoveOscTrans()); break;
       case 'MoveEccentRot': this.value.push(new MoveEccentRot()); break;
-      case'MoveObject': this.value.push(new MoveObject()); break;
+      case 'MoveObject': this.value.push(new MoveObject()); break;
       case 'LinearRepeater': this.value.push(new LinearRepeater()); break;
       case 'RingRepeater': this.value.push(new RingRepeater()); break;
-      case'CubicArrayRepeater': this.value.push(new CubicArrayRepeater()); break;
+      case 'CubicArrayRepeater': this.value.push(new CubicArrayRepeater()); break;
       case 'QuadrantRepeater': this.value.push(new QuadrantRepeater()); break;
       case 'SphereRepeater': this.value.push(new SphereRepeater()); break;
-      case'GenericRepeater': this.value.push(new GenericRepeater()); break;
+      case 'GenericRepeater': this.value.push(new GenericRepeater()); break;
       case 'RepeatObject': this.value.push(new RepeatObject()); break;
+      case 'CutInRegion': this.value.push(new CutInRegion()); break;
       case 'Process': this.value.push(new Process()); break;
+      case 'Model': this.value.push(new Model()); break;
       case 'SetDatasetObject': this.value.push(new SetDatasetObject()); break;
       case 'Window': this.value.push(new Window()); break;
-      case'LocalBlurring': this.value.push(new LocalBlurring()); break;
+      case 'LocalBlurring': this.value.push(new LocalBlurring()); break;
       case 'TransferEfficiency': this.value.push(new TransferEfficiency()); break;
       case 'LightYield': this.value.push(new LightYield()); break;
       case 'IntrinsicResolutionBlurring': this.value.push(new IntrinsicResolutionBlurring()); break;
       case 'QuantumEfficiency': this.value.push(new QuantumEfficiency()); break;
+      case 'CoincidenceSorter': this.value.push(new CoincidenceSorter()); break;
+      case 'ModuleSub': this.value.push(new ModuleSub()); break;
     }
     console.log('add', this.value.length);
   }

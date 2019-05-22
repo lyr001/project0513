@@ -8,6 +8,8 @@
   <input type="text" />
 </li> -->
 
-<app-form [default]="b"></app-form>
+<app-form [default]="c" (getInput)="result=$event"></app-form>
 <!-- (getInput)="result=$event;" -->
 <div>{{ result | json }}</div>
+<p></p>
+<app-form [default]="d"></app-form>

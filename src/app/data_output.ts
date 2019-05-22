@@ -9,6 +9,7 @@ export class DataOutput {
   ecat7: Ecat7;
   lmf: Lmf;
   imageCT: ImageCT;
+  execute: string;
 
   constructor(options: {
     ascii?: Ascii,
@@ -18,7 +19,8 @@ export class DataOutput {
     sinoaccel?: Sinogram,
     ecat7?: Ecat7,
     lmf?: Lmf,
-    imageCT?: ImageCT
+    imageCT?: ImageCT,
+    execute?: string
   } = {}) {
     this.ascii = options.ascii || new Ascii();
     this.root = options.root || new Root();
@@ -28,6 +30,7 @@ export class DataOutput {
     this.ecat7 = options.ecat7 || new Ecat7();
     this.lmf = options.lmf || new Lmf();
     this.imageCT = options.imageCT || new ImageCT();
+    this.execute = options.execute || '';
   }
 
   input_type(key: string) {
@@ -40,6 +43,7 @@ export class DataOutput {
       case 'ecat7': return 'Ecat7'; break;
       case 'lmf': return 'Lmf'; break;
       case 'imageCT': return 'ImageCT'; break;
+      case 'execute': return 'string'; break;
     }
   }
 }

@@ -39,6 +39,10 @@ export class InputFormComponent implements OnInit {
     return item.subclass;
   }
 
+  str2num(item) {
+    return Number(item);
+  }
+
 }
 
 

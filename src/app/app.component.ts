@@ -2,6 +2,7 @@ import { Component, AfterContentInit, Renderer2, ElementRef } from '@angular/cor
 import {VariableArr, Volume} from './basic_class';
 import {CTscanner} from './geometry';
 import { fromEvent } from 'rxjs';
+import {geometry_14m, repeater_14m} from './1.4m';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,8 @@ export class AppComponent implements AfterContentInit {
   title = 'project0513';
   a = new Volume();
   b = new CTscanner();
+  c = geometry_14m;
+  d = repeater_14m;
   result: any;
   readonly downWithButton$ = fromEvent<MouseEvent>(
     this.ef.nativeElement,
