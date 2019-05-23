@@ -122,7 +122,8 @@ export const geometry_14m = new Geometry({
       })
     })
   }),
-  phantom: new PhantomSub({
+  phantom: new VariableArr('PhantomSub', [
+    new PhantomSub({
     type: 'Volume',
     content: new Volume({
       name: 'phantom',
@@ -143,6 +144,8 @@ export const geometry_14m = new Geometry({
       })
     })
   })
+  ]),
+  execute: 'MoveVisu.mac'
 });
 
 export const placement_14m = new Placement({
@@ -356,8 +359,7 @@ export const data_output_14m = new DataOutput({
     root_hit_flag: false,
     root_singles_flag: false,
     root_coincidences_flag: true
-  }),
-  execute: 'Verbose.mac'
+  })
 });
 
 export const material_database_14m = new MaterialDatabase({path: '../../../../GateMaterials.db'});

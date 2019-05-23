@@ -21,6 +21,7 @@ import {
   SetDatasetObject,
   TransferEfficiency
 } from './physics';
+import {PhantomSub} from './geometry';
 
 export class Volume {
   name: string;
@@ -616,6 +617,7 @@ export class VariableArr {
       case 'QuantumEfficiency': this.value.push(new QuantumEfficiency()); break;
       case 'CoincidenceSorter': this.value.push(new CoincidenceSorter()); break;
       case 'ModuleSub': this.value.push(new ModuleSub()); break;
+      case 'PhantomSub': this.value.push(new PhantomSub()); break;
     }
     console.log('add', this.value.length);
   }

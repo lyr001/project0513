@@ -31,7 +31,7 @@ export class Physics {
     mag_field?: Vec3
   } = {}) {
     this.physics_list = options.physics_list || '';
-    this.cut_in_region = options.cut_in_region || new VariableArr('C');
+    this.cut_in_region = options.cut_in_region || new VariableArr('CutInRegion');
     // this.cut_in_patient = options.cut_in_patient || new CutInRegion();
     this.activate_step_limiter = options.activate_step_limiter || '';
     this.process = options.process || new VariableArr('Process');

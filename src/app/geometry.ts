@@ -3,23 +3,27 @@ import {VariableArr, Volume, VoxelizedPhantom} from './basic_class';
 export class Geometry {
   world: Volume;              // shape 为 box
   scanner: SystemSub;
-  phantom: PhantomSub;
+  phantom: VariableArr;                   // PhantomSub;
+  execute: string;
 
   constructor(options: {
     world?: Volume,
     scanner?: SystemSub,
-    phantom?: PhantomSub
+    phantom?: VariableArr,
+    execute?: string
   } = {}) {
     this.world = options.world || new Volume({name: 'world'});
     this.scanner = options.scanner || new SystemSub();
-    this.phantom = options.phantom || new PhantomSub();
+    this.phantom = options.phantom || new VariableArr('PhantomSub');
+    this.execute = options.execute || '';
   }
 
   input_type(key: string) {
     switch (key) {
       case 'world': return 'Volume'; break;
       case 'scanner': return 'SystemSub'; break;
-      case 'phantom': return 'PhantomSub'; break;
+      case 'phantom': return 'VariableArr'; break;
+      case 'execute': return 'string'; break;
     }
   }
 }

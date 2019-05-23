@@ -97,6 +97,8 @@ export class Root {
   file_name: string;
   root_hit_flag: boolean;
   root_singles_flag: boolean;
+  root_singles_adder_flag: boolean;
+  root_singles_readout_flag: boolean;
   root_coincidences_flag: boolean;
   root_ntuple_flag: boolean;
   out_file_singles_adder_flag: boolean;
@@ -111,6 +113,8 @@ export class Root {
     file_name?: string,
     root_hit_flag?: boolean,
     root_singles_flag?: boolean,
+    root_singles_adder_flag?: boolean,
+    root_singles_readout_flag?: boolean,
     root_coincidences_flag?: boolean,
     root_ntuple_flag?: boolean,
     out_file_singles_adder_flag?: boolean,
@@ -124,6 +128,8 @@ export class Root {
     this.file_name = options.file_name || '';
     this.root_hit_flag = options.root_hit_flag || false;
     this.root_singles_flag = options.root_singles_flag || false;
+    this.root_singles_adder_flag = options.root_singles_adder_flag || false;
+    this.root_singles_readout_flag = options.root_singles_readout_flag || false;
     this.root_coincidences_flag = options.root_coincidences_flag || false;
     this.root_ntuple_flag = options.root_ntuple_flag || false;
     this.out_file_singles_adder_flag = options.out_file_singles_adder_flag || false;
@@ -140,6 +146,8 @@ export class Root {
       case 'file_name': return 'string'; break;
       case 'root_hit_flag': return 'boolean'; break;
       case 'root_singles_flag': return 'boolean'; break;
+      case 'root_singles_adder_flag': return 'boolean'; break;
+      case 'root_singles_readout_flag': return 'boolean'; break;
       case 'root_coincidences_flag': return 'boolean'; break;
       case 'root_ntuple_flag': return 'boolean'; break;
       case 'out_file_singles_adder_flag': return 'boolean'; break;
@@ -190,19 +198,31 @@ export class Sinogram {
   radial_bins: number;
   trues_only: boolean;
   raw_output_enable: boolean;
+  tang_crystal_blurring: Value;
+  axial_crystal_blurring: Value;
+  verbose: number;
+  input_data_name: string;
 
   constructor(options: {
     enable?: boolean,
     file_name?: string,
     radial_bins?: number,
     trues_only?: boolean,
-    raw_output_enable?: boolean
+    raw_output_enable?: boolean,
+    tang_crystal_blurring?: Value,
+    axial_crystal_blurring?: Value,
+    verbose?: number,
+    input_data_name?: string
   } = {}) {
     this.enable = options.enable || false;
     this.file_name = options.file_name || '';
     this.radial_bins = options.radial_bins || null;
     this.trues_only = options.trues_only || false;
     this.raw_output_enable = options.raw_output_enable || false;
+    this.tang_crystal_blurring = options.tang_crystal_blurring || new Value();
+    this.axial_crystal_blurring = options.axial_crystal_blurring || new Value();
+    this.verbose = options.verbose || null;
+    this.input_data_name = options.input_data_name || '';
   }
 
   input_type(key: string) {
@@ -212,6 +232,10 @@ export class Sinogram {
       case 'radial_bins': return 'number'; break;
       case 'trues_only': return 'boolean'; break;
       case 'raw_output_enable': return 'boolean'; break;
+      case 'tang_crystal_blurring': return 'Value'; break;
+      case 'axial_crystal_blurring': return 'Value'; break;
+      case 'verbose': return 'number'; break;
+      case 'input_data_name': return 'string'; break;
     }
   }
 }
@@ -223,6 +247,10 @@ export class Ecat7 {
   span: number;
   mashing: number;
   system: number;
+  verbose: number;
+  isotope_code: string;
+  isotope_halflife: Value;
+  isotope_branching_fraction: number;
 
   constructor(options: {
     enable?: boolean,
@@ -230,7 +258,11 @@ export class Ecat7 {
     maxringdiff?: number,
     span?: number,
     mashing?: number,
-    system?: number
+    system?: number,
+    verbose?: number,
+    isotope_code?: string,
+    isotope_halflife?: Value,
+    isotope_branching_fraction?: number
   } = {}) {
     this.enable = options.enable || false;
     this.file_name = options.file_name || '';
@@ -238,6 +270,10 @@ export class Ecat7 {
     this.span = options.span || null;
     this.mashing = options.mashing || null;
     this.system = options.system || null;
+    this.verbose = options.verbose || null;
+    this.isotope_code = options.isotope_code || '';
+    this.isotope_halflife = options.isotope_halflife || new Value();
+    this.isotope_branching_fraction = options.isotope_branching_fraction || null;
   }
 
   input_type(key: string) {
@@ -248,6 +284,10 @@ export class Ecat7 {
       case 'span': return 'number'; break;
       case 'mashing': return 'number'; break;
       case 'system': return 'number'; break;
+      case 'verbose': return 'number'; break;
+      case 'isotope_code': return 'string'; break;
+      case 'isotope_halflife': return 'Value'; break;
+      case 'isotope_branching_fraction': return 'number'; break;
     }
   }
 }
