@@ -1,4 +1,4 @@
-import {VariableArr, Volume, VoxelizedPhantom} from './basic_class';
+import {Box, ShapeSub, VariableArr, Volume, VoxelizedPhantom} from './basic_class';
 
 export class Geometry {
   world: Volume;              // shape 为 box
@@ -12,7 +12,7 @@ export class Geometry {
     phantom?: VariableArr,
     execute?: string
   } = {}) {
-    this.world = options.world || new Volume({name: 'world'});
+    this.world = options.world || new Volume({name: 'world', shape: new ShapeSub({type: 'Box', content: new Box()})});
     this.scanner = options.scanner || new SystemSub();
     this.phantom = options.phantom || new VariableArr('PhantomSub');
     this.execute = options.execute || '';

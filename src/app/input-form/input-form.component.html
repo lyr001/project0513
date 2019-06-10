@@ -1,19 +1,48 @@
 <span [ngSwitch]="type">
-  <input *ngSwitchCase="'string'"
-         type="text" value="{{result}}" #inputElement
-         (keyup.enter)="get_input(inputElement.value)"
-         (blur)="get_input(inputElement.value)">
+  <!--<input *ngSwitchCase="'string'"-->
+         <!--type="text" value="{{result}}" #inputElement-->
+         <!--(keyup.enter)="get_input(inputElement.value)"-->
+         <!--(blur)="get_input(inputElement.value)">-->
+
+  <span *ngSwitchCase="'string'">
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <input type="text"
+               matInput
+               placeholder="{{key}}"
+               value="{{result}}" #inputElement
+               (keyup.enter)="get_input(inputElement.value)"
+               (blur)="get_input(inputElement.value)">
+      </mat-form-field>
+    </form>
+  </span>
          <!-- (blur)="get_input(inputElement.value)" -->
-  <input *ngSwitchCase="'number'"
-         type="number" value="{{result}}" #inputElement
-         (keyup.enter)="get_input(str2num(inputElement.value))"
-         (blur)="get_input(str2num(inputElement.value))">
+  <!--<input *ngSwitchCase="'number'"-->
+         <!--type="number" value="{{result}}" #inputElement-->
+         <!--(keyup.enter)="get_input(str2num(inputElement.value))"-->
+         <!--(blur)="get_input(str2num(inputElement.value))">-->
+  <span *ngSwitchCase="'number'">
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <input type="number"
+               matInput
+               placeholder="{{key}}"
+               value="{{result}}" #inputElement
+               (keyup.enter)="get_input(str2num(inputElement.value))"
+               (blur)="get_input(str2num(inputElement.value))">
+      </mat-form-field>
+    </form>
+  </span>
          <!-- (blur)="get_input(inputElement.value)" -->
-  <input *ngSwitchCase="'boolean'"
-         type="checkbox" [(ngModel)]="result"
-         (ngModelChange)="get_input(result)">
+  <!--<input *ngSwitchCase="'boolean'"-->
+         <!--type="checkbox" [(ngModel)]="result"-->
+         <!--(ngModelChange)="get_input(result)">-->
+  <span *ngSwitchCase="'boolean'">
+    <mat-checkbox [(ngModel)]="result"
+                  (ngModelChange)="get_input(result)">{{key}}</mat-checkbox>
+  </span>
   <span *ngSwitchCase="'undefined'" (blur)="get_input(undefined)"></span>
   <!-- (blur)="get_input(undefined)" -->
-  <app-form *ngSwitchCase="'object'" [default]="result" (getInput)="get_input($event)"></app-form>
-  <app-form *ngSwitchDefault [default]="result" (getInput)="get_input($event)"></app-form>
+  <app-form *ngSwitchCase="'object'" [keyname]="key" [default]="result" (getInput)="get_input($event)"></app-form>
+  <app-form *ngSwitchDefault [keyname]="key" [default]="result" (getInput)="get_input($event)"></app-form>
   </span>

@@ -30,6 +30,7 @@ import {Acquisition, EngineSeedSub, MaterialDatabase, TimeSliceSub} from './acqu
 
 export const geometry_14m = new Geometry({
   world: new Volume({
+    name: 'world',
     shape: new ShapeSub({
       type: 'Box',
       content: new Box({

@@ -7,8 +7,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class FormComponent implements OnInit {
   // @Input() default: object | undefined;
+  @Input() keyname: string;
   @Output() getInput = new EventEmitter();
   result: object | undefined;
+  showflag: boolean;
 
   // result: any;
 
@@ -19,7 +21,9 @@ export class FormComponent implements OnInit {
     this.result = r;
   }
 
-  constructor() {}
+  constructor() {
+    this.showflag = false;
+  }
 
   ngOnInit() {}
 
@@ -53,5 +57,13 @@ export class FormComponent implements OnInit {
   }
   test(e: any) {
     console.log(e);
+  }
+
+  getArrkey(key: string, i: number) {
+    return `${key}[${i}]`;
+  }
+
+  getShowFlag() {
+    return (this.result !== undefined) && this.showflag;
   }
 }

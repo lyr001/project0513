@@ -8,6 +8,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 export class InputFormComponent implements OnInit {
 
   @Input() type: string;
+  @Input() key: string;
   // @Input() default: any;
   @Output() getInput = new EventEmitter();
   result: any;

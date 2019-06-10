@@ -6,6 +6,9 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FormComponent } from './form/form.component';
 import { InputFormComponent } from './input-form/input-form.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatInputModule, MatCheckboxModule, MatButtonModule, MatTableModule,
+  MatSelectModule, MatTreeModule, MatExpansionModule, MatIconModule, MatTabsModule,
+  MatGridListModule, MatToolbarModule, MatDividerModule, MatListModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -17,7 +20,20 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatCheckboxModule,
+    MatButtonModule,
+    MatTableModule,
+    MatSelectModule,
+    MatTreeModule,
+    MatExpansionModule,
+    MatIconModule,
+    MatTabsModule,
+    MatGridListModule,
+    MatToolbarModule,
+    MatDividerModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
