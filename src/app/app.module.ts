@@ -9,6 +9,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule, MatCheckboxModule, MatButtonModule, MatTableModule,
   MatSelectModule, MatTreeModule, MatExpansionModule, MatIconModule, MatTabsModule,
   MatGridListModule, MatToolbarModule, MatDividerModule, MatListModule} from '@angular/material';
+import { DisplayModule } from './display/display.module'
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {MatInputModule, MatCheckboxModule, MatButtonModule, MatTableModule,
     MatGridListModule,
     MatToolbarModule,
     MatDividerModule,
-    MatListModule
+    MatListModule,
+    DisplayModule
   ],
   providers: [],
   bootstrap: [AppComponent]
