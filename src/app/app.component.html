@@ -52,6 +52,9 @@
     <app-form [default]="repeater" [keyname]="'Repeater'" (getInput)="repeater_result=$event"></app-form>
 
     <!--这里加图像和可视化按钮-->
+    <p></p> 
+    <h2>Visualization</h2>
+    <app-test [mygeometry]='geometry' [myplacement] = 'placement' [myrepeater] = 'repeater'></app-test> 
 
   </mat-tab>
   <mat-tab label="Physics Process">
