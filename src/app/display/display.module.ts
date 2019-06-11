@@ -6,7 +6,7 @@ import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [  CanvasComponent, TestComponent],
-  exports:[CanvasComponent,TestComponent],
+  exports: [CanvasComponent, TestComponent],
   imports: [
     CommonModule
   ]
