@@ -11,7 +11,7 @@
     <ng-container [ngSwitch]="getType(result.input_type(key))">
       <span *ngSwitchCase="'[object String]'">
         <span *ngIf="result.input_type(key) == 'VariableArr'">
-          <button mat-icon-button disabled></button>
+          <!--<button mat-icon-button disabled></button>-->
           <button mat-raised-button color="primary" (click)="add(key); test($event)">添加 {{key}}</button>
           <div *ngFor="let element of result[key].value; let i = index" style="padding-left: 20px;">
             <app-input-form

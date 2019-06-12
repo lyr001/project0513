@@ -2,6 +2,9 @@
   <span>GATE Simulation Platform</span>
   <span class="example-fill-remaining-space"></span>
   <span>
+    <button mat-raised-button (click)="l_post(getURL())">提交</button>
+    <!--'http://simplemacgen.azurewebsites.net/macgen?rmax=123&height=456'-->
+    <button mat-icon-button disabled></button>
     <mat-form-field>
       <mat-label>Completed Simulation Abstract Model</mat-label>
       <mat-select [(ngModel)]="chooseSAM" (ngModelChange)="chooseComSAM()">
@@ -77,4 +80,9 @@
       </div>
     </div>
   </mat-tab>
+  <!--<mat-tab label="MAC file">-->
+    <!--<div style="padding-top: 15px; padding-right: 5%; padding-left: 2%;">-->
+      <!--<label>{{result.mac}}</label>-->
+    <!--</div>-->
+  <!--</mat-tab>-->
 </mat-tab-group>

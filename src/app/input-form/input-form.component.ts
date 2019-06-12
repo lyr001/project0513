@@ -29,7 +29,7 @@ export class InputFormComponent implements OnInit {
 
   get_input(value: any) {
     this.getInput.emit(value);
-    console.log(value);
+    // console.log(value);
   }
 
   getType(item) {

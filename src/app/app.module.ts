@@ -9,7 +9,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatInputModule, MatCheckboxModule, MatButtonModule, MatTableModule,
   MatSelectModule, MatTreeModule, MatExpansionModule, MatIconModule, MatTabsModule,
   MatGridListModule, MatToolbarModule, MatDividerModule, MatListModule} from '@angular/material';
-import { DisplayModule } from './display/display.module'
+import { DisplayModule } from './display/display.module';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { DisplayModule } from './display/display.module'
     MatToolbarModule,
     MatDividerModule,
     MatListModule,
-    DisplayModule
+    DisplayModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

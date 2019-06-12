@@ -1,5 +1,6 @@
 import { Component, AfterContentInit, Renderer2, ElementRef } from '@angular/core';
 import {Geometry} from './geometry';
+import {HttpClient} from '@angular/common/http';
 import { fromEvent } from 'rxjs';
 import {
   acquisition_14m,
@@ -56,7 +57,7 @@ import {Acquisition, MaterialDatabase} from './acquisition&others';
 })
 export class AppComponent implements AfterContentInit {
   // .subscribe(e => console.log(e), console.error);
-  constructor(private render: Renderer2, private ef: ElementRef) {
+  constructor(private render: Renderer2, private ef: ElementRef, private http: HttpClient) {
 
   }
   geometry = new Geometry();
@@ -81,6 +82,8 @@ export class AppComponent implements AfterContentInit {
   acquisition_result = new Acquisition();
   material_database = new MaterialDatabase();
   material_database_result = new MaterialDatabase();
+
+  result = {mac: ''};
 
   readonly downWithButton$ = fromEvent<MouseEvent>(
     this.ef.nativeElement,
@@ -235,6 +238,25 @@ export class AppComponent implements AfterContentInit {
         this.acquisition_result = new Acquisition();
         this.material_database_result = new MaterialDatabase();
     }
+  }
+
+  l_post(url: string) {
+    this.http.post(url, {rmax: this.geometry_result.phantom.value[0].content.shape.content.rmax.num,
+      height: this.geometry_result.phantom.value[0].content.shape.content.height.num}).subscribe(a => this.getMac(a));
+    console.log(this.geometry_result.phantom.value[0].content.shape.content.rmax.num,
+      this.geometry_result.phantom.value[0].content.shape.content.height.num);
+  }
+
+  getMac(a: object) {
+    // @ts-ignore
+    this.result.mac = a.mac;
+    console.log(this.result.mac);
+  }
+
+  getURL() {
+    return 'http://simplemacgen.azurewebsites.net/macgen?rmax=' +
+      `${this.geometry_result.phantom.value[0].content.shape.content.rmax.num}` +
+    `&height=${this.geometry_result.phantom.value[0].content.shape.content.height.num}`;
   }
 
   ngAfterContentInit() {

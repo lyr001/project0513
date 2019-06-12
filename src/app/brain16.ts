@@ -423,21 +423,6 @@ export function repeater_brain16() {
 // });
 export function physics_brain16() {
   return new Physics({
-    cut_in_region: new VariableArr('CutInRegion', [
-      new CutInRegion({
-        region: 'crystal',
-        gamma: new Value({num: 1, unit: 'cm'}),
-        electron: new Value({num: 1, unit: 'cm'}),
-        positron: new Value({num: 1, unit: 'cm'})
-      }),
-      new CutInRegion({
-        region: 'phantom',
-        gamma: new Value({num: 0.1, unit: 'mm'}),
-        electron: new Value({num: 0.1, unit: 'mm'}),
-        positron: new Value({num: 0.1, unit: 'mm'}),
-        max_step: new Value({num: 0.01, unit: 'mm'})
-      })
-    ]),
     process: new VariableArr('Process', [
       new Process({
         add: true,
