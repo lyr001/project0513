@@ -31,3 +31,13 @@ mat-form-field {
      Every toolbar row uses a flexbox row layout. */
   flex: 1 1 auto;
 }
+
+.horizontal-container {
+  display: flex;
+  flex: auto;
+  flex-flow: row wrap;
+}
+
+.fixed-size {
+  width: 50%;
+}

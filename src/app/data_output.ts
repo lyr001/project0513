@@ -1,4 +1,4 @@
-import {Value} from './basic_class';
+import {getBoolean, Value} from './basic_class';
 
 export class DataOutput {
   ascii: Ascii;
@@ -68,11 +68,11 @@ export class Ascii {
     single_mask?: [boolean, boolean, boolean, boolean],
     out_file_size_limit?: number
   } = {}) {
-    this.enable = options.enable || false;
+    this.enable = getBoolean(options.enable, false);
     this.file_name = options.file_name || '';
-    this.out_file_hits_flag = options.out_file_hits_flag || false;
-    this.out_file_singles_flag = options.out_file_singles_flag || false;
-    this.out_file_coincidences_flag = options.out_file_coincidences_flag || false;
+    this.out_file_hits_flag = getBoolean(options.out_file_hits_flag, false);
+    this.out_file_singles_flag = getBoolean(options.out_file_singles_flag, false);
+    this.out_file_coincidences_flag = getBoolean(options.out_file_coincidences_flag, false);
     this.coincidence_mask = options.coincidence_mask || [false, false, false, false, false, false];
     this.single_mask = options.single_mask || [false, false, false, false];
     this.out_file_size_limit = options.out_file_size_limit || null;
@@ -124,20 +124,20 @@ export class Root {
     out_file_singles_thresholder_flag?: boolean,
     out_file_singles_upholder_flag?: boolean
   } = {}) {
-    this.enable = options.enable || false;
+    this.enable = getBoolean(options.enable, false);
     this.file_name = options.file_name || '';
-    this.root_hit_flag = options.root_hit_flag || false;
-    this.root_singles_flag = options.root_singles_flag || false;
-    this.root_singles_adder_flag = options.root_singles_adder_flag || false;
-    this.root_singles_readout_flag = options.root_singles_readout_flag || false;
-    this.root_coincidences_flag = options.root_coincidences_flag || false;
-    this.root_ntuple_flag = options.root_ntuple_flag || false;
-    this.out_file_singles_adder_flag = options.out_file_singles_adder_flag || false;
-    this.out_file_singles_readout_flag = options.out_file_singles_readout_flag || false;
-    this.out_file_singles_spblurring_flag = options.out_file_singles_spblurring_flag || false;
-    this.out_file_singles_blurring_flag = options.out_file_singles_blurring_flag || false;
-    this.out_file_singles_thresholder_flag = options.out_file_singles_thresholder_flag || false;
-    this.out_file_singles_upholder_flag = options.out_file_singles_upholder_flag || false;
+    this.root_hit_flag = getBoolean(options.root_hit_flag, false);
+    this.root_singles_flag = getBoolean(options.root_singles_flag, false);
+    this.root_singles_adder_flag = getBoolean(options.root_singles_adder_flag, false);
+    this.root_singles_readout_flag = getBoolean(options.root_singles_readout_flag, false);
+    this.root_coincidences_flag = getBoolean(options.root_coincidences_flag, false);
+    this.root_ntuple_flag = getBoolean(options.root_ntuple_flag, false);
+    this.out_file_singles_adder_flag = getBoolean(options.out_file_singles_adder_flag, false);
+    this.out_file_singles_readout_flag = getBoolean(options.out_file_singles_readout_flag, false);
+    this.out_file_singles_spblurring_flag = getBoolean(options.out_file_singles_spblurring_flag, false);
+    this.out_file_singles_blurring_flag = getBoolean(options.out_file_singles_blurring_flag, false);
+    this.out_file_singles_thresholder_flag = getBoolean(options.out_file_singles_thresholder_flag, false);
+    this.out_file_singles_upholder_flag = getBoolean(options.out_file_singles_upholder_flag, false);
   }
 
   input_type(key: string) {
@@ -174,7 +174,7 @@ export class Interfile {
     pixel_size?: [Value, Value],
     pixel_number?: [number, number]
   } = {}) {
-    this.enable = options.enable || false;
+    this.enable = getBoolean(options.enable, false);
     this.file_name = options.file_name || '';
     this.projection_plane = options.projection_plane || '';
     this.pixel_size = options.pixel_size || [new Value(), new Value()];
@@ -214,11 +214,11 @@ export class Sinogram {
     verbose?: number,
     input_data_name?: string
   } = {}) {
-    this.enable = options.enable || false;
+    this.enable = getBoolean(options.enable, false);
     this.file_name = options.file_name || '';
     this.radial_bins = options.radial_bins || null;
-    this.trues_only = options.trues_only || false;
-    this.raw_output_enable = options.raw_output_enable || false;
+    this.trues_only = getBoolean(options.trues_only, false);
+    this.raw_output_enable = getBoolean(options.raw_output_enable, false);
     this.tang_crystal_blurring = options.tang_crystal_blurring || new Value();
     this.axial_crystal_blurring = options.axial_crystal_blurring || new Value();
     this.verbose = options.verbose || null;
@@ -264,7 +264,7 @@ export class Ecat7 {
     isotope_halflife?: Value,
     isotope_branching_fraction?: number
   } = {}) {
-    this.enable = options.enable || false;
+    this.enable = getBoolean(options.enable, false);
     this.file_name = options.file_name || '';
     this.maxringdiff = options.maxringdiff || null;
     this.span = options.span || null;
@@ -332,24 +332,24 @@ export class Lmf {
     event_id_bool?: boolean,
     run_id_bool?: boolean
   } = {}) {
-    this.enable = options.enable || false;
+    this.enable = getBoolean(options.enable, false);
     this.file_name = options.file_name || '';
-    this.detector_id_bool = options.detector_id_bool || false;
-    this.energy_bool = options.energy_bool || false;
-    this.gantry_axial_pos_bool = options.gantry_axial_pos_bool || false;
-    this.gantry_angular_pos_bool = options.gantry_angular_pos_bool || false;
-    this.source_pos_bool = options.source_pos_bool || false;
-    this.neighbour_bool = options.neighbour_bool || false;
-    this.neighbourhood_order = options.neighbourhood_order || false;
-    this.coincidence_bool = options.coincidence_bool || false;
-    this.gate_digi_bool = options.gate_digi_bool || false;
-    this.compton_bool = options.compton_bool || false;
-    this.compton_detector_bool = options.compton_detector_bool || false;
-    this.source_id_bool = options.source_id_bool || false;
-    this.source_xyzpos_bool = options.source_xyzpos_bool || false;
-    this.global_xyzpos_bool = options.global_xyzpos_bool || false;
-    this.event_id_bool = options.event_id_bool || false;
-    this.run_id_bool = options.run_id_bool || false;
+    this.detector_id_bool = getBoolean(options.detector_id_bool, false);
+    this.energy_bool = getBoolean(options.energy_bool, false);
+    this.gantry_axial_pos_bool = getBoolean(options.gantry_axial_pos_bool , false);
+    this.gantry_angular_pos_bool = getBoolean(options.gantry_angular_pos_bool, false);
+    this.source_pos_bool = getBoolean(options.source_pos_bool, false);
+    this.neighbour_bool = getBoolean(options.neighbour_bool, false);
+    this.neighbourhood_order = getBoolean(options.neighbourhood_order, false);
+    this.coincidence_bool = getBoolean(options.coincidence_bool, false);
+    this.gate_digi_bool = getBoolean(options.gate_digi_bool, false);
+    this.compton_bool = getBoolean(options.compton_bool, false);
+    this.compton_detector_bool = getBoolean(options.compton_detector_bool, false);
+    this.source_id_bool = getBoolean(options.source_id_bool, false);
+    this.source_xyzpos_bool = getBoolean(options.source_xyzpos_bool , false);
+    this.global_xyzpos_bool = getBoolean(options.global_xyzpos_bool, false);
+    this.event_id_bool = getBoolean(options.event_id_bool, false);
+    this.run_id_bool = getBoolean(options.run_id_bool, false);
   }
 
   input_type(key: string) {
@@ -390,7 +390,7 @@ export class ImageCT {
     vrt_factor?: number,
     start_seed?: number
   } = {}) {
-    this.enable = options.enable || false;
+    this.enable = getBoolean(options.enable, false);
     this.file_name = options.file_name || '';
     this.num_pixel = options.num_pixel || [null, null];
     this.vrt_factor = options.vrt_factor || null;

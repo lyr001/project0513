@@ -57,6 +57,7 @@ export class TestComponent implements OnInit {
   }
   //初始化 
   init() {
+   console.log(this.mygeometry);
     this.myinput();
     this.scene = new Scene();
     this.camera = this.perspectivecamera;//还没有做按键切换相机
@@ -77,7 +78,7 @@ export class TestComponent implements OnInit {
     this.animate();
   }
   ngOnInit() {
-    
+
   }
 
 }

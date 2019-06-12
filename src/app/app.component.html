@@ -1,33 +1,3 @@
-<!--<mat-form-field>-->
-  <!--<mat-label>Completed Simulation Abstract Model</mat-label>-->
-  <!--<mat-select [(ngModel)]="chooseSAM" (ngModelChange)="chooseComSAM()">-->
-    <!--<mat-option *ngFor="let element of CompletedSAM" value="{{element}}">{{element}}</mat-option>-->
-  <!--</mat-select>-->
-<!--</mat-form-field>-->
-
-<!--<p></p>-->
-<!--<app-form [default]="geometry" [keyname]="'Geometry'" (getInput)="geometry_result=$event"></app-form>-->
-<!--&lt;!&ndash;<div>{{ geometry_result | json }}</div>&ndash;&gt;-->
-<!--<p></p>-->
-<!--<app-form [default]="placement" [keyname]="'Placement'" (getInput)="placement_result=$event"></app-form>-->
-<!--<p></p>-->
-<!--<app-form [default]="move" [keyname]="'Move'" (getInput)="move_result=$event"></app-form>-->
-<!--<p></p>-->
-<!--<app-form [default]="repeater" [keyname]="'Repeater'" (getInput)="repeater_result=$event"></app-form>-->
-<!--<p></p>-->
-<!--<app-form [default]="physics" [keyname]="'Physics Process'" (getInput)="physics_result=$event"></app-form>-->
-<!--<p></p>-->
-<!--<app-form [default]="dataset" [keyname]="'Dataset'" (getInput)="dataset_result=$event"></app-form>-->
-<!--<p></p>-->
-<!--<app-form [default]="digitizer" [keyname]="'Digitizer'" (getInput)="digitizer_result=$event"></app-form>-->
-<!--<p></p>-->
-<!--<app-form [default]="source" [keyname]="'Source'" (getInput)="source_result=$event"></app-form>-->
-<!--<p></p>-->
-<!--<app-form [default]="data_output" [keyname]="'Data Output'" (getInput)="data_output_result=$event"></app-form>-->
-<!--<p></p>-->
-<!--<app-form [default]="acquisition" [keyname]="'Acquisition'" (getInput)="acquisition_result=$event"></app-form>-->
-<!--<p></p>-->
-<!--<app-form [default]="material_database" [keyname]="'Material Database'" (getInput)="material_database_result=$event"></app-form>-->
 <mat-toolbar color="primary" role="heading" style="font-size: x-large">
   <span>GATE Simulation Platform</span>
   <span class="example-fill-remaining-space"></span>
@@ -42,38 +12,69 @@
 </mat-toolbar>
 <mat-tab-group>
   <mat-tab label="Geometry">
-    <app-form [default]="geometry" [keyname]="'Geometry'" (getInput)="geometry_result=$event"></app-form>
-    <!--<div>{{ geometry_result | json }}</div>-->
-    <p></p>
-    <app-form [default]="placement" [keyname]="'Placement'" (getInput)="placement_result=$event"></app-form>
-    <p></p>
-    <app-form [default]="move" [keyname]="'Move'" (getInput)="move_result=$event"></app-form>
-    <p></p>
-    <app-form [default]="repeater" [keyname]="'Repeater'" (getInput)="repeater_result=$event"></app-form>
-
-    <!--这里加图像和可视化按钮-->
-    <p></p> 
-    <h2>Visualization</h2>
-    <app-test [mygeometry]='geometry' [myplacement] = 'placement' [myrepeater] = 'repeater'></app-test> 
-
+    <div class="horizontal-container">
+      <div class="fixed-size">
+        <div style="padding-top: 15px; padding-right: 2%; padding-left: 3%;">
+          <app-form [default]="geometry" [keyname]="'Geometry'" (getInput)="geometry_result=$event"></app-form>
+          <!--<div>{{ geometry_result | json }}</div>-->
+          <p></p>
+          <app-form [default]="placement" [keyname]="'Placement'" (getInput)="placement_result=$event"></app-form>
+          <p></p>
+          <app-form [default]="move" [keyname]="'Move'" (getInput)="move_result=$event"></app-form>
+          <p></p>
+          <app-form [default]="repeater" [keyname]="'Repeater'" (getInput)="repeater_result=$event"></app-form>
+        </div>
+      </div>
+      <!--这里加图像和可视化按钮-->
+      <div class="fixed-size">
+        <div style="padding-top: 15px; padding-right: 5%; padding-left: 2%;">
+          <label>Visualization</label>
+          <app-test [mygeometry]='geometry_result' [myplacement] = 'placement_result' [myrepeater] = 'repeater_result'></app-test>
+        </div>
+      </div>
+    </div>
   </mat-tab>
   <mat-tab label="Physics Process">
-    <app-form [default]="physics" [keyname]="'Physics Process'" (getInput)="physics_result=$event"></app-form>
-    <p></p>
-    <app-form [default]="dataset" [keyname]="'Dataset'" (getInput)="dataset_result=$event"></app-form>
+    <div class="horizontal-container">
+      <div class="fixed-size">
+        <div style="padding-top: 15px; padding-right: 2%; padding-left: 3%;">
+          <app-form [default]="physics" [keyname]="'Physics Process'" (getInput)="physics_result=$event"></app-form>
+        </div>
+      </div>
+      <div class="fixed-size">
+        <div style="padding-top: 15px; padding-right: 5%; padding-left: 2%;">
+          <app-form [default]="dataset" [keyname]="'Dataset'" (getInput)="dataset_result=$event"></app-form>
+        </div>
+      </div>
+    </div>
   </mat-tab>
   <mat-tab label="Digitizer">
-    <app-form [default]="digitizer" [keyname]="'Digitizer'" (getInput)="digitizer_result=$event"></app-form>
+    <div style="padding-top: 15px; padding-right: 5%; padding-left: 2%;">
+      <app-form [default]="digitizer" [keyname]="'Digitizer'" (getInput)="digitizer_result=$event"></app-form>
+    </div>
   </mat-tab>
   <mat-tab label="Source">
-    <app-form [default]="source" [keyname]="'Source'" (getInput)="source_result=$event"></app-form>
+    <div style="padding-top: 15px; padding-right: 5%; padding-left: 2%;">
+      <app-form [default]="source" [keyname]="'Source'" (getInput)="source_result=$event"></app-form>
+    </div>
   </mat-tab>
   <mat-tab label="Data Output">
-    <app-form [default]="data_output" [keyname]="'Data Output'" (getInput)="data_output_result=$event"></app-form>
+    <div style="padding-top: 15px; padding-right: 5%; padding-left: 2%;">
+      <app-form [default]="data_output" [keyname]="'Data Output'" (getInput)="data_output_result=$event"></app-form>
+    </div>
   </mat-tab>
   <mat-tab label="Acquisition and others">
-    <app-form [default]="acquisition" [keyname]="'Acquisition'" (getInput)="acquisition_result=$event"></app-form>
-    <p></p>
-    <app-form [default]="material_database" [keyname]="'Material Database'" (getInput)="material_database_result=$event"></app-form>
+    <div class="horizontal-container">
+      <div class="fixed-size">
+        <div style="padding-top: 15px; padding-right: 2%; padding-left: 3%;">
+          <app-form [default]="acquisition" [keyname]="'Acquisition'" (getInput)="acquisition_result=$event"></app-form>
+        </div>
+      </div>
+      <div class="fixed-size">
+        <div style="padding-top: 15px; padding-right: 5%; padding-left: 2%;">
+          <app-form [default]="material_database" [keyname]="'Material Database'" (getInput)="material_database_result=$event"></app-form>
+        </div>
+      </div>
+    </div>
   </mat-tab>
 </mat-tab-group>

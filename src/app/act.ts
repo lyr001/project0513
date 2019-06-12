@@ -3,7 +3,7 @@ import {
   Cone,
   Cylinder,
   Ellipsoid,
-  EllipticalTube, Hexagone,
+  EllipticalTube, getBoolean, Hexagone,
   Shape,
   Sphere,
   Tessellated,
@@ -173,7 +173,7 @@ export class MoveRotation {
     target?: VariableArr
   } = {}) {
     this.speed = options.speed || new Value();
-    this.axis = options.axis || [false, false, false];
+    this.axis = [getBoolean(options.axis[0], false), getBoolean(options.axis[1], false), getBoolean(options.axis[2], false)];
     this.target = options.target || new VariableArr('MoveObject');
   }
 
@@ -203,7 +203,7 @@ export class MoveOrbiting {
     this.speed = options.speed || new Value();
     this.point1 = options.point1 || new Vec3();
     this.point2 = options.point2 || new Vec3();
-    this.auto_rotation = options.auto_rotation || false;
+    this.auto_rotation = getBoolean(options.auto_rotation, false);
     this.target = options.target || new VariableArr('MoveObject');
   }
 
@@ -367,7 +367,7 @@ export class LinearRepeater {
   } = {}) {
     this.repeat_number = options.repeat_number || null;
     this.repeat_vector = options.repeat_vector || new Vec3();
-    this.auto_center = options.auto_center || true;
+    this.auto_center = getBoolean(options.auto_center, true);
     this.target = options.target || new VariableArr('RepeatObject');
   }
 
@@ -418,7 +418,7 @@ export class RingRepeater {
         new Value({num: 0, unit: 'cm'}),
         new Value({num: 0, unit: 'cm'}),
         new Value({num: 0, unit: 'cm'})];
-    this.auto_rotation = options.auto_rotation || true;
+    this.auto_rotation = getBoolean(options.auto_rotation, true);
     this.target = options.target || new VariableArr('RepeatObject');
   }
 
@@ -540,7 +540,7 @@ export class GenericRepeater {
     target?: VariableArr
   } = {}) {
     this.placements_filename = options.placements_filename ||  '';
-    this.relative_translation = options.relative_translation || false;
+    this.relative_translation = getBoolean(options.relative_translation, false);
     this.target = options.target || new VariableArr('RepeatObject');
   }
 

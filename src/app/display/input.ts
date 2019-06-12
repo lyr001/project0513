@@ -1,18 +1,18 @@
 import { RepeatService } from './services/repeat.service';
 
  export class Geometry {
-    world: Volume;              
+    world: Volume;
     scanner: System;
     phantom: any;
   }
  export class System {
-    base:Volume;
+    base: Volume;
     level1: Volume;
     level2: Volume;
     level3: Volume;
     level4: Volume[];
     level5: Volume[];
-    constructor(){
+    constructor() {
       this.base = new Volume();
       this.level1 = new Volume();
       this.level2 = new Volume();
@@ -23,13 +23,13 @@ import { RepeatService } from './services/repeat.service';
   }
 ////////////////////////////
  export class Volume {
-    name:string; 
-    shape: any;////
+    name: string;
+    shape: any; ////
     appearance: Appearance;
     translation?: PlacementTranslation[];
     rotation?: PlacementRotation[];
-    repeat?: any;////
-    constructor(){
+    repeat?: any; ////
+    constructor() {
       this.name = '';
       this.shape = undefined;
       this.appearance = new Appearance();
@@ -39,14 +39,14 @@ import { RepeatService } from './services/repeat.service';
     }
   }
   /////////////////////////////////////////////////////////////////////////////////
-  
+
   export class Shape {}
-  
+
   export class Box extends Shape {
     size: [number, number, number];
-    constructor(){super();this.size = [null,null,null];}
+    constructor() {super(); this.size = [null, null, null]; }
   }
-  
+
   export class Sphere extends Shape {
     rmin: number;
     rmax: number;
@@ -54,17 +54,17 @@ import { RepeatService } from './services/repeat.service';
     delta_phi: number;
     theta_start: number;
     delta_theta: number;
-    constructor(){
+    constructor() {
       super();
       this.rmin = null;
       this.rmax = null;
       this.phi_start = 0;
-      this.delta_phi = Math.PI*2;
+      this.delta_phi = Math.PI * 2;
       this.theta_start = 0;
-      this.delta_theta = Math.PI*2;
+      this.delta_theta = Math.PI * 2;
     }
   }
-  
+
   export class Cylinder extends Shape {
     rmin: number;
     rmax: number;
@@ -77,10 +77,10 @@ import { RepeatService } from './services/repeat.service';
       this.rmax = null;
       this.height = null;
       this.phi_start = 0;
-      this.delta_phi = Math.PI*2;
+      this.delta_phi = Math.PI * 2;
     }
   }
-  
+
   export class Cone extends Shape {
     rmin1: number;
     rmax1: number;
@@ -97,22 +97,22 @@ import { RepeatService } from './services/repeat.service';
       this.rmax2 = null;
       this.height = null;
       this.phi_start = 0;
-      this.delta_phi = Math.PI*2;
+      this.delta_phi = Math.PI * 2;
     }
   }
-  
+
   export class Ellipsoid extends Shape {
-    size: [number,number,number];
+    size: [number, number, number];
     z_bottom_cut: number;
     z_top_cut: number;
     constructor() {
       super();
-      this.size = [null,null,null];
+      this.size = [null, null, null];
       this.z_bottom_cut = -100;
       this.z_top_cut = 100;
     }
   }
-  
+
   export class EllipticalTube extends Shape {
     long: number;
     short: number;
@@ -124,7 +124,7 @@ import { RepeatService } from './services/repeat.service';
       this.height = null;
     }
   }
-  
+
   export class Tessellated extends Shape {
     path_to_vertices_file: string;
     constructor() {
@@ -132,7 +132,7 @@ import { RepeatService } from './services/repeat.service';
       this.path_to_vertices_file = '';
     }
   }
-  
+
   export class TetMeshBox extends Shape {
     path_to_ele_file: string;
     unit_of_length: string;
@@ -144,15 +144,15 @@ import { RepeatService } from './services/repeat.service';
       this.path_to_attribute_map = '';
     }
   }
-  
+
   export class TRPD extends Shape {
     x1: number;
     y1: number;
     x2: number;
     y2: number;
     z: number;
-    box_size: [number,number,number];
-    box_pos: [number,number,number];
+    box_size: [number, number, number];
+    box_pos: [number, number, number];
     constructor() {
       super();
       this.x1 = null;
@@ -160,11 +160,11 @@ import { RepeatService } from './services/repeat.service';
       this.x2 = null;
       this.y2 = null;
       this.z = null;
-      this.box_size = [null,null,null];
-      this.box_pos = [0,0,0];
+      this.box_size = [null, null, null];
+      this.box_pos = [0, 0, 0];
     }
   }
-  
+
   export class Hexagone extends Shape {
     radius: number;
     height: number;
@@ -174,38 +174,38 @@ import { RepeatService } from './services/repeat.service';
       this.height = null;
     }
   }
-  
+
   export class Wedge extends Shape {
     narrower_xlength: number;
-    size: [number,number,number];
+    size: [number, number, number];
     constructor() {
       super();
       this.narrower_xlength = null;
-      this.size = [null,null,null];
+      this.size = [null, null, null];
     }
   }
 
- 
+
   /////////////////////////////////////////////////////////////////////////////////
- 
+
   export class PlacementTranslation {
     value: [number, number, number];
-    constructor(){this.value = [0,0,0]}
+    constructor() {this.value = [0, 0, 0]; }
   }
-  
+
   export class PlacementRotation {
     axis: [number, number, number];
     angle: number;
-    constructor(){this.axis = [0,0,1];this.angle = 0;}
+    constructor() {this.axis = [0, 0, 1]; this.angle = 0; }
   }
-  
+
   /////////////////////////////////////////////////////////////////////////////////
   export class Appearance {
     color: string;
     visible: boolean;
     line_width: number;
     force_wireframe: boolean;
-    constructor(){
+    constructor() {
       this.color = 'white';
       this.visible = true;
       this.line_width = 1;
@@ -217,64 +217,64 @@ import { RepeatService } from './services/repeat.service';
 
   export class LinearRepeater {
     repeat_number: number;
-    repeat_vector: [number,number,number];
+    repeat_vector: [number, number, number];
     auto_center: boolean;
-    constructor(){
+    constructor() {
       this.repeat_number = null;
-      this.repeat_vector = [null,null,null];
+      this.repeat_vector = [null, null, null];
       this.auto_center = true;
     }
   }
   export class RingRepeater {
     repeat_number: number;
-    point1: [number,number,number];
-    point2: [number,number,number];
+    point1: [number, number, number];
+    point2: [number, number, number];
     first_angle:  number;
     angular_span: number;
     modulo_number: number;
-    z_shift: [number, number, number, number, number, number, number,number];
+    z_shift: [number, number, number, number, number, number, number, number];
     auto_rotation: boolean;
-    constructor(){
+    constructor() {
       this.repeat_number = null;
-      this.point1 = [0,0,1];
-      this.point2 = [0,0,0];
+      this.point1 = [0, 0, 1];
+      this.point2 = [0, 0, 0];
       this.first_angle = 0;
-      this.angular_span = Math.PI*2;
+      this.angular_span = Math.PI * 2;
       this.modulo_number = 1;
-      this.z_shift = [0,0,0,0,0,0,0,0];
+      this.z_shift = [0, 0, 0, 0, 0, 0, 0, 0];
       this.auto_rotation = true;
     }
   }
-  
+
   export class CubicArrayRepeater {
     repeat_number: [number, number, number];
     repeat_vector: [number, number, number];
-    constructor(){
-      this.repeat_number = [null,null,null];
-      this.repeat_vector = [null,null,null];
+    constructor() {
+      this.repeat_number = [null, null, null];
+      this.repeat_vector = [null, null, null];
     }
   }
-  
+
   export class QuadrantRepeater {
     line_number: number;
     orientation: number;
     copy_spacing: number;
     max_range: number;
-    constructor(){
+    constructor() {
       this.line_number = null;
       this.orientation = null;
       this.copy_spacing = null;
       this.max_range = null;
     }
   }
-  
+
   export class SphereRepeater {
     radius: number;
     repeat_number_with_theta: number;
     repeat_number_with_phi: number;
     theta_angle: number;
     phi_angle: number;
-    constructor(){
+    constructor() {
       this.radius = null;
       this.repeat_number_with_theta = null;
       this.repeat_number_with_phi = null;
@@ -282,16 +282,16 @@ import { RepeatService } from './services/repeat.service';
       this.phi_angle = null;
     }
   }
-  
+
   export class GenericRepeater {
     placements_filename: string;
     relative_translation: boolean;
-    constructor(){
+    constructor() {
       this.placements_filename = '';
-      this.relative_translation = false;///////////这里还需要确认一下
+      this.relative_translation = false; /////////// 这里还需要确认一下
     }
   }
-  
+
   //////////////////////////////////////////
   export class VoxelizedPhantom {
     name: string;
@@ -311,8 +311,8 @@ import { RepeatService } from './services/repeat.service';
     gamma_discard_energy: number;
     translation?: PlacementTranslation[];
     rotation?: PlacementRotation[];
-    repeat?:Array<any>;
-    constructor(){
+    repeat?: Array<any>;
+    constructor() {
       this.name = '';
       this.insert = '';
       this.image = '';

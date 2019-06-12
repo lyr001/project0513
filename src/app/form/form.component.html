@@ -4,17 +4,13 @@
 <button *ngIf="showflag" (click)="showflag=false;" mat-icon-button>
   <mat-icon>keyboard_arrow_down</mat-icon>
 </button>
-<!--<button *ngIf="!showflag" (click)="showflag=true;" mat-button>+</button>-->
-<!--<button *ngIf="showflag" (click)="showflag=false;" mat-button>-</button>-->
 <label class="mat-tree-node">{{keyname}}</label>
 
 <div *ngIf="getShowFlag()" style="padding-left: 20px;">
   <li class="mat-tree-node" style="list-style-type: none;" *ngFor="let key of getKeys(result)">
     <ng-container [ngSwitch]="getType(result.input_type(key))">
-      <!--<span>{{ key }}:</span>-->
       <span *ngSwitchCase="'[object String]'">
         <span *ngIf="result.input_type(key) == 'VariableArr'">
-          <!--<input>-->
           <button mat-icon-button disabled></button>
           <button mat-raised-button color="primary" (click)="add(key); test($event)">添加 {{key}}</button>
           <div *ngFor="let element of result[key].value; let i = index" style="padding-left: 20px;">
@@ -45,6 +41,7 @@
             [default]="result[key][i]"
             (getInput)="result[key][i] = $event; get_input(result)"
           ></app-input-form>
+          <button mat-icon-button disabled></button>
         </span>
         <!--<form class="example-form">-->
           <!--<table class="example-full-width" cellspacing="0"><tr>-->

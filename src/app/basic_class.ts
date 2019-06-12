@@ -103,7 +103,7 @@ export class VoxelizedPhantom {
     this.hu_to_material_file = options.hu_to_material_file || '';
     this.attach = options.attach || '';
     this.attach_crystal = options.attach_crystal || '';
-    this.skip_equal_materials = options.skip_equal_materials || false;
+    this.skip_equal_materials = getBoolean(options.skip_equal_materials, false);
     this.material_table = options.material_table || '';
     this.density_table = options.density_table || '';
     this.density_tolerance = options.density_tolerance || new Value();
@@ -190,38 +190,38 @@ export class ShapeSub {
 export class Appearance {
   color: string;
   visible: boolean;
-  daughters_invisible: boolean;
-  line_style: string;
+  // daughters_invisible: boolean;
+  // line_style: string;
   line_width: number;
-  force_solid: boolean;
+  // force_solid: boolean;
   force_wireframe: boolean;
 
   constructor(options: {
     color?: string,
     visible?: boolean,
-    daughters_invisible?: boolean,
-    line_style?: string,
+    // daughters_invisible?: boolean,
+    // line_style?: string,
     line_width?: number,
-    force_solid?: boolean,
+    // force_solid?: boolean,
     force_wireframe?: boolean
   } = {}) {
     this.color = options.color || 'white';
-    this.visible = options.visible || true;
-    this.daughters_invisible = options.daughters_invisible || false;
-    this.line_style = options.line_style || '';
+    this.visible = getBoolean(options.visible, true);
+    // this.daughters_invisible = options.daughters_invisible || false;
+    // this.line_style = options.line_style || '';
     this.line_width = options.line_width || 1;
-    this.force_solid = options.force_solid || false;
-    this.force_wireframe = options.force_wireframe || true;
+    // this.force_solid = options.force_solid || false;
+    this.force_wireframe = getBoolean(options.force_wireframe, true);
   }
 
   input_type(key: string) {
     switch (key) {
       case 'color': return 'string'; break;
       case 'visible': return 'boolean'; break;
-      case 'daughters_invisible': return 'boolean'; break;
-      case 'line_style': return 'string'; break;
+      // case 'daughters_invisible': return 'boolean'; break;
+      // case 'line_style': return 'string'; break;
       case 'line_width': return 'number'; break;
-      case 'force_solid': return 'boolean'; break;
+      // case 'force_solid': return 'boolean'; break;
       case 'force_wireframe': return 'boolean'; break;
     }
   }
@@ -630,5 +630,11 @@ export class VariableArr {
   }
 }
 ///////////////////////////////////////////////////////////////////////
-
+export function getBoolean(inp: boolean, def: boolean) {
+  if (inp === undefined) {
+    return def;
+  } else {
+    return inp;
+  }
+}
 

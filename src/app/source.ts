@@ -3,7 +3,7 @@ import {
   Cone,
   Cylinder,
   Ellipsoid,
-  EllipticalTube,
+  EllipticalTube, getBoolean,
   Hexagone,
   Shape,
   Sphere,
@@ -136,7 +136,7 @@ export class Gps {
     this.energytype = options.energytype || '';
     this.spectrum_file = options.spectrum_file || '';
     this.monoenergy = options.monoenergy || new Value();
-    this.forced_unstable_flag = options.forced_unstable_flag || false;
+    this.forced_unstable_flag = getBoolean(options.forced_unstable_flag, false);
     this.half_life = options.half_life || new HalfLife();
     this.activity = options.activity || new Value();
     this.angtype = options.angtype || '';
@@ -231,7 +231,7 @@ export class PencilBeam {
     this.ellipse_y_theta_rotation_norm = options.ellipse_y_theta_rotation_norm || '';
     this.rotation_axis = options.rotation_axis || [null, null, null];
     this.rotation_angle = options.rotation_angle || new Value();
-    this.test_flag = options.test_flag || false;
+    this.test_flag = getBoolean(options.test_flag, false);
     this.total_number_of_primaries = options.total_number_of_primaries || null;
   }
 
@@ -286,13 +286,13 @@ export class TPSPencilBeam {
     this.particle_type = options.particle_type || new ParticalTypeSub();
     this.plan = options.plan || '';
     this.allowed_field = options.allowed_field || new AllowedField();
-    this.spot_intensity_as_nbions = options.spot_intensity_as_nbions || false;
-    this.flat_generation_flag = options.flat_generation_flag || false;
-    this.sorted_spot_generation_flag = options.sorted_spot_generation_flag || false;
+    this.spot_intensity_as_nbions = getBoolean(options.spot_intensity_as_nbions, false);
+    this.flat_generation_flag = getBoolean(options.flat_generation_flag, false);
+    this.sorted_spot_generation_flag = getBoolean(options.sorted_spot_generation_flag, false);
     this.source_description_file = options.source_description_file || '';
     this.beam_convergence = options.beam_convergence || new BeamConvergenceSub();
-    this.sigma_energy_in_MeV_flag = options.sigma_energy_in_MeV_flag || false;
-    this.test_flag = options.test_flag || false;
+    this.sigma_energy_in_MeV_flag = getBoolean(options.sigma_energy_in_MeV_flag, false);
+    this.test_flag = getBoolean(options.test_flag, false);
     this.total_number_of_primaries = options.total_number_of_primaries || null;
   }
 
@@ -441,7 +441,7 @@ export class HalfLife {
     use_default_half_life?: boolean,
     forced_half_life?: Value
   } = {}) {
-    this.use_default_half_life = options.use_default_half_life || false;
+    this.use_default_half_life = getBoolean(options.use_default_half_life, false);
     this.forced_half_life = options.forced_half_life || new Value();
   }
 
@@ -885,8 +885,8 @@ export class BeamConvergenceAxis {
     beam_convergence_x_theta?: boolean,
     beam_convergence_y_phi?: boolean
   } = {}) {
-    this.beam_convergence_x_theta = options.beam_convergence_x_theta || false;
-    this.beam_convergence_y_phi = options.beam_convergence_y_phi || false;
+    this.beam_convergence_x_theta = getBoolean(options.beam_convergence_x_theta, false);
+    this.beam_convergence_y_phi = getBoolean(options.beam_convergence_y_phi, false);
   }
 
   input_type(key: string) {
@@ -943,9 +943,9 @@ export class VoxelizedSource {
     this.insert_reader = options.insert_reader || '';
     this.insert_translator = options.insert_translator || new TranslatorSub();
     this.read_file = options.read_file || '';
-    this.verbose = options.verbose || false;
+    this.verbose = getBoolean(options.verbose, false);
     this.position = options.position || new Vec3();
-    this.dump = options.dump || false;
+    this.dump = getBoolean(options.dump, false);
     this.type = options.type || '';
     this.particle = options.particle || '';
     this.energy_type = options.energy_type || '';
@@ -956,7 +956,7 @@ export class VoxelizedSource {
     this.minphi = options.minphi || new Value();
     this.maxphi = options.maxphi || new Value();
     this.confine = options.confine || '';
-    this.forced_unstable_flag = options.forced_unstable_flag || false;
+    this.forced_unstable_flag = getBoolean(options.forced_unstable_flag, false);
     this.forced_half_life = options.forced_half_life || new Value();
   }
 
@@ -991,7 +991,7 @@ export class Translator {
   constructor(options: {
     insert?: boolean
   } = {}) {
-    this.insert = options.insert || false;
+    this.insert = getBoolean(options.insert, false);
   }
 }
 
@@ -1003,7 +1003,7 @@ export class LinearTranslator extends Translator {
     scale?: boolean
   } = {}) {
     super({insert: options.insert});
-    this.scale = options.scale || false;
+    this.scale = getBoolean(options.scale, false);
   }
 
   input_type(key: string) {
@@ -1025,7 +1025,7 @@ export class RangeTranslator extends Translator {
   } = {}) {
     super({insert: options.insert});
     this.read_table = options.read_table || '';
-    this.describe = options.describe || false;
+    this.describe = getBoolean(options.describe, false);
   }
 
   input_type(key: string) {
